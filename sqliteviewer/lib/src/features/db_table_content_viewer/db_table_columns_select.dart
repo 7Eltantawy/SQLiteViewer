@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
+import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 import 'package:sqliteviewer/src/features/db_table_content_viewer/db_table_content_viewer.dart';
 
@@ -31,7 +32,7 @@ class _DBTableColumnsSelectViewerState
 
   Future initData() async {
     result = await DatabaseHelper.instance.getColumnNames(widget.tableName);
-
+    appPrint(result);
     allColumns = result.map((column) => column['name'] as String).toList();
     selectedColumns.addAll(allColumns);
 
@@ -64,18 +65,29 @@ class _DBTableColumnsSelectViewerState
       body: isLoading
           ? const Loading()
           : ListView.separated(
-              itemCount: allColumns.length,
+              itemCount: result.length,
               itemBuilder: (context, index) {
-                final column = allColumns[index];
+                final column = result[index];
+                final columnName = column["name"];
+                final bool isPK = column["pk"] == 1;
                 return CheckboxListTile(
-                  title: Text(column),
-                  value: selectedColumns.contains(column),
+                  title: Text(columnName),
+                  value: selectedColumns.contains(columnName),
+                  subtitle: Row(
+                    children: [
+                      Text(column["type"].toString()),
+                      if (isPK) ...[
+                        const SizedBox(width: 20),
+                        Icon(isPK ? Icons.key : Icons.boy)
+                      ]
+                    ],
+                  ),
                   onChanged: (bool? value) {
                     setState(() {
                       if (value == true) {
-                        selectedColumns.add(column);
+                        selectedColumns.add(columnName);
                       } else {
-                        selectedColumns.remove(column);
+                        selectedColumns.remove(columnName);
                       }
                     });
                   },
