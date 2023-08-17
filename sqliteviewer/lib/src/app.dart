@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/features/dashboard.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -6,7 +7,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'SQLite Viewer',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const Scaffold(),
+      home: const DashboardScreen(),
     );
   }
 }
