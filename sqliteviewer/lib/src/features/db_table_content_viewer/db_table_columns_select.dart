@@ -76,6 +76,15 @@ class _DBTableColumnsSelectViewerState
         child: ListTile(
           title: const Text("Show", textAlign: TextAlign.center),
           onTap: () {
+            /// Sort columns as in database table
+            selectedColumns.sort(
+              (a, b) {
+                final aMap =
+                    result.firstWhere((element) => element["name"] == a);
+
+                return (aMap["cid"] as int);
+              },
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
