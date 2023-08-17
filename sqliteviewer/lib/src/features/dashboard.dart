@@ -40,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: ListView.builder(
         itemCount: openedPaths.length,
         itemBuilder: (context, index) {
-          return DBFileCard(path: openedPathsReversed[index]);
+          return DBFileCard(dbPath: openedPathsReversed[index]);
         },
       ),
       floatingActionButton: FloatingActionButton(

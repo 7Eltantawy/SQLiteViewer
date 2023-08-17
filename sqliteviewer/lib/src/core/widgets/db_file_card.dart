@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/core/extension/string.dart';
+import 'package:sqliteviewer/src/features/db_viewer.dart';
 
 class DBFileCard extends StatelessWidget {
-  final String path;
-  const DBFileCard({super.key, required this.path});
+  final String dbPath;
+  const DBFileCard({super.key, required this.dbPath});
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +14,23 @@ class DBFileCard extends StatelessWidget {
         size: 40,
       ),
       title: Text(
-        path.split("/").last,
+        dbPath.getFileName(),
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 25,
         ),
       ),
-      subtitle: Text(path),
-      onTap: () {},
+      subtitle: Text(dbPath),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return DBViewer(dbPath: dbPath);
+            },
+          ),
+        );
+      },
     );
   }
 }
