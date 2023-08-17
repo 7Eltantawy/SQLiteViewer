@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBTableContentViewer extends StatefulWidget {
   final String tableName;
+  final List<String> columns;
   const DBTableContentViewer({
     Key? key,
     required this.tableName,
+    required this.columns,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,8 @@ class _DBTableContentViewerState extends State<DBTableContentViewer> {
   }
 
   Future initData() async {
-    result = await DatabaseHelper.instance.getTableContent(widget.tableName);
+    result = await DatabaseHelper.instance
+        .getTableContentForSelectedColumns(widget.tableName, widget.columns);
     appPrint(result);
     setState(() {
       isLoading = false;

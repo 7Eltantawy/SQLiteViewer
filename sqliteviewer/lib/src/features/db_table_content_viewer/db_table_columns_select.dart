@@ -82,6 +82,7 @@ class _DBTableColumnsSelectViewerState
                 builder: (context) {
                   return DBTableContentViewer(
                     tableName: widget.tableName,
+                    columns: selectedColumns,
                   );
                 },
               ),

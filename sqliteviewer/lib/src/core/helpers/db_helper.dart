@@ -43,6 +43,15 @@ class DatabaseHelper {
     return await db.rawQuery("SELECT * FROM $tableName");
   }
 
+  Future<List<Map<String, dynamic>>> getTableContentForSelectedColumns(
+    String tableName,
+    List<String> columns,
+  ) async {
+    final db = await database();
+
+    return await db.query(tableName, columns: columns);
+  }
+
   Future<List<Map<String, dynamic>>> getColumnNames(String tableName) async {
     final db = await database();
 
