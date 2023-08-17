@@ -35,6 +35,12 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
   }
 
   @override
+  void dispose() {
+    sqlCodeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(

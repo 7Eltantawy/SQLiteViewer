@@ -37,6 +37,12 @@ class DatabaseHelper {
     return tables.map((row) => row['name'] as String).toList();
   }
 
+  Future<List<Map<String, dynamic>>> getTableContent(String tableName) async {
+    final db = await database();
+
+    return await db.rawQuery("SELECT * FROM $tableName");
+  }
+
   Future<String> query(String query) async {
     final db = await database();
 

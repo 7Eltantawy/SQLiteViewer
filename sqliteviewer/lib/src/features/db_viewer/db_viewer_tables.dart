@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
+import 'package:sqliteviewer/src/core/widgets/db_table_card.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBViewerTables extends StatefulWidget {
@@ -38,10 +39,8 @@ class _DBViewerTablesState extends State<DBViewerTables> {
               padding: const EdgeInsets.all(15),
               itemCount: tables.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  leading: const Icon(Icons.table_chart_outlined),
-                  title: Text(tables[index]),
-                  onTap: () {},
+                return DBTableCard(
+                  tableName: tables[index],
                 );
               },
             ),
