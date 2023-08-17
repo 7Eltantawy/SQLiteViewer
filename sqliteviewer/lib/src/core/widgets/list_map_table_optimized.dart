@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ListMapTablePagination extends StatefulWidget {
@@ -119,8 +118,6 @@ class _ListMapDataSource extends DataGridSource {
 
   /// Table Header
   List<GridColumn> header() {
-    appPrint(_data);
-    appPrint(_data.isEmpty);
     return <GridColumn>[
       for (final key in _data.first.keys)
         GridColumn(

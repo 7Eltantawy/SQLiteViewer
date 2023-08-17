@@ -32,7 +32,7 @@ class _DBTableColumnsSelectViewerState
 
   Future initData() async {
     result = await DatabaseHelper.instance.getColumnNames(widget.tableName);
-    appPrint(result);
+
     allColumns = result.map((column) => column['name'] as String).toList();
     selectedColumns.addAll(allColumns);
 
@@ -91,7 +91,6 @@ class _DBTableColumnsSelectViewerState
           title: const Text("Show", textAlign: TextAlign.center),
           onTap: () {
             sortAsInDatabase();
-            appPrint(selectedColumns);
             Navigator.push(
               context,
               MaterialPageRoute(
