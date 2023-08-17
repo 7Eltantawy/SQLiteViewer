@@ -34,11 +34,7 @@ class DBFileCard extends StatelessWidget {
 
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              return DBDashboard(dbPath: dbPath);
-            },
-          ),
+          DBDashboard.route(dbPath),
         );
       },
     );

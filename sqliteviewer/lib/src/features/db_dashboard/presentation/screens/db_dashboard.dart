@@ -1,37 +1,28 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
-import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/controller/cubit/db_dashboard_cubit.dart';
 import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_query_page.dart';
 import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_tables_page.dart';
 
-class DBDashboard extends StatefulWidget {
+class DBDashboard extends StatelessWidget {
   final String dbPath;
   const DBDashboard({
     Key? key,
     required this.dbPath,
   }) : super(key: key);
 
-  @override
-  State<DBDashboard> createState() => _DBDashboardState();
-}
+  static const String routeName = "/db_dashboard";
 
-class _DBDashboardState extends State<DBDashboard> {
-  @override
-  void initState() {
-    DatabaseHelper.path = widget.dbPath;
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    try {
-      DatabaseHelper.instance.close();
-    } catch (e) {
-      appPrint(e);
-    }
-    super.dispose();
+  static Route route(String dbPath) {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => BlocProvider(
+        create: (context) => DbDashboardCubit(dbPath),
+        child: DBDashboard(dbPath: dbPath),
+      ),
+    );
   }
 
   @override
@@ -40,7 +31,7 @@ class _DBDashboardState extends State<DBDashboard> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.dbPath.getFileName()),
+          title: Text(dbPath.getFileName()),
           centerTitle: true,
           bottom: const TabBar(
             tabs: [
