@@ -37,6 +37,7 @@ dependencies:
   file_picker: ^5.3.3
   syncfusion_flutter_datagrid: ^22.2.9
   fluttertoast: ^8.2.2
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

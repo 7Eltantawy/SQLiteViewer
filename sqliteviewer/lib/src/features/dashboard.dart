@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/core/helpers/local_storage.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
 import 'package:sqliteviewer/src/core/widgets/db_file_card.dart';
@@ -12,9 +13,10 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final List<String> openedPaths = [];
+  late final List<String> openedPaths;
   List<String> get openedPathsReversed => openedPaths.reversed.toList();
   String selectedFilePath = 'null';
+
   Future<void> pickDatabaseFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
@@ -36,6 +38,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
       openedPaths.add(selectedFilePath);
     });
+
+    await LocalStorageRepo.setLastOpenedFiles(openedPaths);
+  }
+
+  @override
+  void initState() {
+    openedPaths = LocalStorageRepo.lastOpenedFiles();
+    super.initState();
   }
 
   @override
