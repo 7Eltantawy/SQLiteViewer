@@ -72,8 +72,10 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
               },
             ),
           )),
-          CustomInputField(
-              text: sqlCodeController.text, keywords: sqlLangKeyWordMap),
+          SQLCodePreview(
+            text: sqlCodeController.text,
+            keywords: sqlLangKeyWordMap,
+          ),
           Flexible(
               child: Card(
             child: ListView(

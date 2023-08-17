@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
-class CustomInputField extends StatelessWidget {
+class SQLCodePreview extends StatelessWidget {
   final String text;
-  final Map<String, Color> keywords;
-  const CustomInputField(
-      {super.key, required this.keywords, required this.text});
+  final List<String> keywords;
+  const SQLCodePreview({
+    super.key,
+    required this.keywords,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-      ),
       child: RichText(
+        textAlign: TextAlign.start,
         text: TextSpan(
           style: const TextStyle(fontSize: 16),
           children: _buildTextSpans(text),
@@ -29,10 +30,10 @@ class CustomInputField extends StatelessWidget {
     for (String word in words) {
       bool isKeyword = false;
       Color? textColor;
-      for (final MapEntry<String, Color> item in keywords.entries) {
-        if (word.toLowerCase() == item.key.toLowerCase()) {
+      for (final String item in keywords) {
+        if (word.toLowerCase() == item.toLowerCase()) {
           isKeyword = true;
-          textColor = item.value;
+          textColor = Colors.blue;
           break;
         }
       }
