@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
-import 'package:sqliteviewer/src/core/widgets/list_map_table.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
+
+import '../../core/widgets/list_map_table_optimized.dart';
 
 class DBTableContentViewer extends StatefulWidget {
   final String tableName;
@@ -44,7 +45,7 @@ class _DBTableContentViewerState extends State<DBTableContentViewer> {
         title: Text(widget.tableName),
         centerTitle: true,
       ),
-      body: isLoading ? const Loading() : ListMapTable(data: result),
+      body: isLoading ? const Loading() : ListMapTablePagination(data: result),
     );
   }
 }
