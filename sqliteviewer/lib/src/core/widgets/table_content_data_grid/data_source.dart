@@ -16,7 +16,7 @@ class TableContentDataGridDataSource extends DataGridSource {
           columnName: key,
           label: Container(
             padding: const EdgeInsets.all(8),
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: Text(
               key,
               style: const TextStyle(

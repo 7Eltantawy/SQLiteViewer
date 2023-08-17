@@ -82,7 +82,9 @@ class _TableContentDataGridState extends State<TableContentDataGrid> {
             allowColumnsResizing: true,
             gridLinesVisibility: GridLinesVisibility.both,
             headerGridLinesVisibility: GridLinesVisibility.both,
-            columnWidthMode: ColumnWidthMode.fitByColumnName,
+            columnWidthMode: widget.data.first.keys.length == 1
+                ? ColumnWidthMode.fill
+                : ColumnWidthMode.fitByColumnName,
           );
   }
 
