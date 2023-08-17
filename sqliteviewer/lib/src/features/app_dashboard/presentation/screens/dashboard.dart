@@ -15,7 +15,6 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late final List<String> openedPaths;
   List<String> get openedPathsReversed => openedPaths.reversed.toList();
-  String selectedFilePath = 'null';
 
   Future<void> pickDatabaseFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -32,7 +31,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     setState(() {
-      selectedFilePath = filePath;
+      final String selectedFilePath = filePath;
       if (openedPaths.contains(selectedFilePath)) {
         openedPaths.removeWhere((e) => e == selectedFilePath);
       }
