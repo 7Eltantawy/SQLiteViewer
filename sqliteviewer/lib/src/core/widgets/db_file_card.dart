@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
+import 'package:sqliteviewer/src/core/utils/show_toast.dart';
 import 'package:sqliteviewer/src/features/db_viewer/db_viewer.dart';
 
 class DBFileCard extends StatelessWidget {
@@ -21,7 +24,14 @@ class DBFileCard extends StatelessWidget {
         ),
       ),
       subtitle: Text(dbPath),
-      onTap: () {
+      onTap: () async {
+        final bool isExist = File(dbPath).existsSync();
+
+        if (!isExist) {
+          showToast("Not Exist");
+          return;
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
