@@ -15,7 +15,7 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
           AppDashboardState(openedPaths: LocalStorageRepo.lastOpenedFiles()),
         );
 
-  Future<void> pickDatabase() async {
+  Future<void> pickDatabaseFromFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.any,
     );

@@ -9,6 +9,8 @@ class AppDashboardState extends Equatable {
     required this.openedPaths,
   });
 
+  List<String> get openedPathsReversed => openedPaths.reversed.toList();
+
   @override
   List<Object> get props => [openedPaths];
 
