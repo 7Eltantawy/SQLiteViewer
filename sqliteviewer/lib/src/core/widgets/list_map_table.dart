@@ -49,24 +49,30 @@ class _ListMapDataSource extends DataGridSource {
 
   @override
   List<DataGridRow> get rows => _data
-      .map<DataGridRow>((data) => DataGridRow(cells: [
+      .map<DataGridRow>(
+        (data) => DataGridRow(
+          cells: [
             for (final entry in data.entries)
               DataGridCell<String>(
                 columnName: entry.key,
                 value: entry.value.toString(),
               ),
-          ]))
+          ],
+        ),
+      )
       .toList();
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((e) {
-      return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(10.0),
-        child: Text(e.value.toString()),
-      );
-    }).toList());
+        cells: row.getCells().map<Widget>(
+      (e) {
+        return Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(10.0),
+          child: Text(e.value.toString()),
+        );
+      },
+    ).toList());
   }
 }
