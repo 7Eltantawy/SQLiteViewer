@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
+import 'package:sqliteviewer/src/features/db_viewer/db_viewer_queries.dart';
+import 'package:sqliteviewer/src/features/db_viewer/db_viewer_tables.dart';
 
 class DBViewer extends StatefulWidget {
   final String dbPath;
@@ -22,8 +24,20 @@ class _DBViewerState extends State<DBViewer> {
         appBar: AppBar(
           title: Text(widget.dbPath.getFileName()),
           centerTitle: true,
+          bottom: const TabBar(
+            tabs: [
+              Tab(child: Text("Tables")),
+              Tab(child: Text("Queries")),
+            ],
+          ),
         ),
-        body: const Text("data"),
+        body: const TabBarView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            DBViewerTables(),
+            DBViewerQueries(),
+          ],
+        ),
       ),
     );
   }
