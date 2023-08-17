@@ -43,7 +43,7 @@ class DatabaseHelper {
     return await db.rawQuery("SELECT * FROM $tableName");
   }
 
-  Future<String> query(String query) async {
+  Future<List<Map<String, dynamic>>> query(String query) async {
     final db = await database();
 
     appPrint(query);
@@ -51,6 +51,6 @@ class DatabaseHelper {
       query,
     );
 
-    return maps.toString();
+    return maps;
   }
 }

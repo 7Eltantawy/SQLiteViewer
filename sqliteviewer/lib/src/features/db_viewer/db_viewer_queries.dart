@@ -14,7 +14,7 @@ class DBViewerQueries extends StatefulWidget {
 
 class _DBViewerQueriesState extends State<DBViewerQueries> {
   final TextEditingController sqlCodeController = TextEditingController();
-  String result = "";
+  List<Map<String, dynamic>> result = [];
   bool isQuerying = false;
 
   Future query() async {
@@ -26,7 +26,9 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
       result =
           await DatabaseHelper.instance.query(sqlCodeController.text.trim());
     } catch (e) {
-      result = e.toString();
+      result = [
+        {"SQLite Viewer Error": e.toString()}
+      ];
     }
 
     setState(() {
@@ -84,14 +86,17 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
           ),
           Flexible(
               child: Card(
-            child: ListView(
-              children: [
-                RichText(
-                  text: TextSpan(
-                    text: result,
-                  ),
-                )
-              ],
+            child: ListView.builder(
+              itemCount: result.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(result[index]
+                      .toString()
+                      .replaceAll(",", ",\n")
+                      .replaceAll("{", "{\n")
+                      .replaceAll("}", "\n}")),
+                );
+              },
             ),
           )),
         ],

@@ -42,13 +42,20 @@ class _DBTableContentViewerState extends State<DBTableContentViewer> {
       ),
       body: isLoading
           ? const Loading()
-          : ListView.builder(
+          : ListView.separated(
               itemCount: result.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   leading: const Icon(Icons.table_rows_outlined),
-                  title: Text(result[index].toString()),
+                  title: SelectableText(result[index]
+                      .toString()
+                      .replaceAll(",", ",\n")
+                      .replaceAll("{", "{\n")
+                      .replaceAll("}", "\n}")),
                 );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
               },
             ),
     );
