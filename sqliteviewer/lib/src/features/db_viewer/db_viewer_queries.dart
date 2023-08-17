@@ -74,7 +74,7 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
               expands: true,
               decoration: const InputDecoration(),
               inputFormatters: [
-                ColoredTextFormatter(sqlLangKeyWordMap),
+                ColoredTextFormatter(sqliteReservedKeywords),
               ],
               onChanged: (value) {
                 setState(() {});
@@ -83,7 +83,7 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
           )),
           SQLCodePreview(
             text: sqlCodeController.text,
-            keywords: sqlLangKeyWordMap,
+            keywords: sqliteReservedKeywords,
           ),
           Expanded(
               child: Card(

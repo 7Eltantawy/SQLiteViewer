@@ -1,59 +1,74 @@
-final List<String> sqlLangKeyWordMap = [
-  // Data Definition Language (DDL) keywords
-  'CREATE',
-  'ALTER',
-  'DROP',
-  'TABLE',
-  'INDEX',
-  'VIEW',
+final List<String> sqliteReservedKeywords = [
+  // A
+  'ABORT', 'ACTION', 'ADD', 'AFTER', 'ALL', 'ALTER', 'ANALYZE', 'AND', 'AS',
+  'ASC', 'ATTACH', 'AUTOINCREMENT',
 
-  // Data Manipulation Language (DML) keywords
-  'SELECT',
-  'INSERT',
-  'UPDATE',
-  'DELETE',
-  'FROM',
-  'WHERE',
-  'SET',
+  // B
+  'BEFORE', 'BEGIN', 'BETWEEN', 'BY',
 
-  // Data Control Language (DCL) keywords
-  'GRANT',
-  'REVOKE',
-  'AUTHORIZATION',
+  // C
+  'CASCADE', 'CASE', 'CAST', 'CHECK', 'COLLATE', 'COLUMN', 'COMMIT', 'CONFLICT',
+  'CONSTRAINT', 'CREATE', 'CROSS',
+  'CURRENT_DATE', 'CURRENT_TIME', 'CURRENT_TIMESTAMP',
 
-  // Transaction Control Language (TCL) keywords
-  'BEGIN',
-  'COMMIT',
-  'ROLLBACK',
-  'SAVEPOINT',
-  'RELEASE',
+  // D
+  'DATABASE', 'DEFAULT', 'DEFERRABLE', 'DEFERRED', 'DELETE', 'DESC', 'DETACH',
+  'DISTINCT', 'DROP',
 
-  // Other keywords
-  'AND',
-  'OR',
-  'NOT',
-  'NULL',
-  'ORDER',
-  'BY',
-  'GROUP',
+  // E
+  'EACH', 'ELSE', 'END', 'ESCAPE', 'EXCEPT', 'EXCLUSIVE', 'EXISTS', 'EXPLAIN',
+
+  // F
+  'FAIL', 'FOR', 'FOREIGN', 'FROM', 'FULL',
+
+  // G
+  'GLOB', 'GROUP',
+
+  // H
   'HAVING',
-  'JOIN',
-  'INNER',
-  'OUTER',
-  'LEFT',
-  'RIGHT',
-  'ON',
-  'DISTINCT',
-  'AS',
-  'CASE',
-  'WHEN',
-  'THEN',
-  'ELSE',
-  'END',
 
-  /// other by test
-  'PRAGMA',
-  'table_info',
-  '(',
-  ')',
+  // I
+  'IF', 'IGNORE', 'IMMEDIATE', 'IN', 'INDEX', 'INDEXED', 'INITIALLY', 'INNER',
+  'INSERT', 'INSTEAD', 'INTERSECT', 'INTO', 'IS', 'ISNULL',
+
+  // J
+  'JOIN',
+
+  // K
+  'KEY',
+
+  // L
+  'LEFT', 'LIKE', 'LIMIT',
+
+  // M
+  'MATCH',
+
+  // N
+  'NATURAL', 'NO', 'NOT', 'NOTNULL', 'NULL',
+
+  // O
+  'OF', 'OFFSET', 'ON', 'OR', 'ORDER', 'OUTER',
+
+  // P
+  'PLAN', 'PRAGMA', 'PRIMARY',
+
+  // Q
+  'QUERY',
+
+  // R
+  'RAISE', 'RECURSIVE', 'REFERENCES', 'REGEXP', 'REINDEX', 'RELEASE', 'RENAME',
+  'REPLACE', 'RESTRICT', 'RIGHT', 'ROLLBACK', 'ROW',
+
+  // S
+  'SAVEPOINT', 'SELECT', 'SET', 'TABLE', 'TEMP', 'TEMPORARY', 'THEN', 'TO',
+  'TRANSACTION', 'TRIGGER',
+
+  // U
+  'UNION', 'UNIQUE', 'UPDATE', 'USING',
+
+  // V
+  'VACUUM', 'VALUES', 'VIEW', 'VIRTUAL',
+
+  // W
+  'WHEN', 'WHERE', 'WITH', 'WITHOUT'
 ];
