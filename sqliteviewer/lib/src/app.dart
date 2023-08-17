@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/features/dashboard.dart';
+import 'package:sqliteviewer/src/features/app_dashboard/presentation/screens/dashboard.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

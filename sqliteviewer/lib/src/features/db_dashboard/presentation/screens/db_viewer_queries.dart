@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/formatter/sql_keywords_formatter.dart';
-import 'package:sqliteviewer/src/core/formatter/test.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/components/formatter/sql_keywords_formatter.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/components/formatter/test.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/sql/keywords.dart';
-import 'package:sqliteviewer/src/core/widgets/table_content_data_grid/table_content_data_grid.dart';
+import 'package:sqliteviewer/src/features/db_table_viewer/presentation/components/table_content_data_grid.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBViewerQueries extends StatefulWidget {

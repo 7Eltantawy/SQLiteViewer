@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
-import 'package:sqliteviewer/src/core/widgets/db_table_card.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/components/db_table_card.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBViewerTables extends StatefulWidget {

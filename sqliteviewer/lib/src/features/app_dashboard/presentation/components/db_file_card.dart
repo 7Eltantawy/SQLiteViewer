@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
-import 'package:sqliteviewer/src/features/db_viewer/db_viewer.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_viewer.dart';
 
 class DBFileCard extends StatelessWidget {
   final String dbPath;

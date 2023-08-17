@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/local_storage.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
-import 'package:sqliteviewer/src/core/widgets/db_file_card.dart';
+import 'package:sqliteviewer/src/features/app_dashboard/presentation/components/db_file_card.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/widgets/table_content_data_grid/data_source.dart';
+import 'package:sqliteviewer/src/features/db_table_viewer/presentation/components/data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class TableContentDataGrid extends StatefulWidget {

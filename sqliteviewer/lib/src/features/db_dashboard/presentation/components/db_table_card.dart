@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import '../../features/db_table_content_viewer/db_table_columns_select.dart';
+import '../../../db_table_viewer/presentation/screens/db_table_columns_select.dart';
 
 class DBTableCard extends StatelessWidget {
   final String tableName;

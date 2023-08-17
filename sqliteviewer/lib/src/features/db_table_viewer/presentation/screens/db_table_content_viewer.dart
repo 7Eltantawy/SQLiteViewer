@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
-import '../../core/widgets/table_content_data_grid/table_content_data_grid.dart';
+import '../components/table_content_data_grid.dart';
 
 class DBTableContentViewer extends StatefulWidget {
   final String tableName;

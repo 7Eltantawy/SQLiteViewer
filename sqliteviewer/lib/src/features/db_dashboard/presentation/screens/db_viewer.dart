@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
-import 'package:sqliteviewer/src/features/db_viewer/db_viewer_queries.dart';
-import 'package:sqliteviewer/src/features/db_viewer/db_viewer_tables.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_viewer_queries.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_viewer_tables.dart';
 
 class DBViewer extends StatefulWidget {
   final String dbPath;
