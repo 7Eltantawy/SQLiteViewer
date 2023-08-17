@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqliteviewer/src/features/app_dashboard/presentation/components/db_file_card.dart';
-import 'package:sqliteviewer/src/features/db_dashboard/presentation/controller/cubit/app_dashboard_cubit.dart';
+import 'package:sqliteviewer/src/features/app_dashboard/presentation/controller/cubit/app_dashboard_cubit.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
