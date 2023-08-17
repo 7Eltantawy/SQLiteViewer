@@ -52,6 +52,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Image.asset("assets/icons/app_icon.png"),
+        ),
         title: const Text("SQLite Viewer"),
         centerTitle: true,
       ),
@@ -62,6 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: "Open Database",
         child: const Icon(Icons.file_open_outlined),
         onPressed: () async {
           try {
