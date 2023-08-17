@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/helpers/local_storage.dart';
+import 'package:sqliteviewer/src/features/app_dashboard/data/data_source/local_storage.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
 import 'package:sqliteviewer/src/features/app_dashboard/presentation/components/db_file_card.dart';
