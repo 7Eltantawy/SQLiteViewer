@@ -10,20 +10,22 @@ class ListMapTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        columns: [
-          for (int i = 0; i < data.first.keys.length; i++)
-            DataColumn(label: Text(data.first.keys.elementAt(i))),
-        ],
-        rows: data.map((map) {
-          return DataRow(cells: [
-            for (final entry in map.entries)
-              DataCell(Text(entry.value.toString())),
-          ]);
-        }).toList(),
-      ),
-    );
+    return data.isEmpty
+        ? const SizedBox()
+        : SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: DataTable(
+              columns: [
+                for (final key in data.first.keys)
+                  DataColumn(label: Text(key.toString())),
+              ],
+              rows: data.map((map) {
+                return DataRow(cells: [
+                  for (final entry in map.entries)
+                    DataCell(Text(entry.value.toString())),
+                ]);
+              }).toList(),
+            ),
+          );
   }
 }

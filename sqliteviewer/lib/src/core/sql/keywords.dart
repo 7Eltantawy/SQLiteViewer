@@ -1,4 +1,4 @@
-List<String> sqlLangKeyWordMap = [
+final List<String> sqlLangKeyWordMap = [
   // Data Definition Language (DDL) keywords
   'CREATE',
   'ALTER',
@@ -50,4 +50,10 @@ List<String> sqlLangKeyWordMap = [
   'THEN',
   'ELSE',
   'END',
+
+  /// other by test
+  'PRAGMA',
+  'table_info',
+  '(',
+  ')',
 ];
