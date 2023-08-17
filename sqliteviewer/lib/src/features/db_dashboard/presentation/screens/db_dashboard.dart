@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
-import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_viewer_queries.dart';
-import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_viewer_tables.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_query_page.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_tables_page.dart';
 
-class DBViewer extends StatefulWidget {
+class DBDashboard extends StatefulWidget {
   final String dbPath;
-  const DBViewer({
+  const DBDashboard({
     Key? key,
     required this.dbPath,
   }) : super(key: key);
 
   @override
-  State<DBViewer> createState() => _DBViewerState();
+  State<DBDashboard> createState() => _DBDashboardState();
 }
 
-class _DBViewerState extends State<DBViewer> {
+class _DBDashboardState extends State<DBDashboard> {
   @override
   void initState() {
     DatabaseHelper.path = widget.dbPath;
@@ -52,8 +52,8 @@ class _DBViewerState extends State<DBViewer> {
         body: const TabBarView(
           physics: BouncingScrollPhysics(),
           children: [
-            DBViewerTables(),
-            DBViewerQueries(),
+            DBTablesPage(),
+            DBQueryPage(),
           ],
         ),
       ),

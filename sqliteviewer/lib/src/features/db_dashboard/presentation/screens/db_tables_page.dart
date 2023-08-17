@@ -3,14 +3,14 @@ import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/features/db_dashboard/presentation/components/db_table_card.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
-class DBViewerTables extends StatefulWidget {
-  const DBViewerTables({super.key});
+class DBTablesPage extends StatefulWidget {
+  const DBTablesPage({super.key});
 
   @override
-  State<DBViewerTables> createState() => _DBViewerTablesState();
+  State<DBTablesPage> createState() => _DBTablesPageState();
 }
 
-class _DBViewerTablesState extends State<DBViewerTables> {
+class _DBTablesPageState extends State<DBTablesPage> {
   late final List<String> tables;
   bool isLoading = true;
   @override

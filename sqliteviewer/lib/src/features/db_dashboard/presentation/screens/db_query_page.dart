@@ -6,14 +6,14 @@ import 'package:sqliteviewer/src/core/sql/keywords.dart';
 import 'package:sqliteviewer/src/features/db_table_viewer/presentation/components/table_content_data_grid.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
-class DBViewerQueries extends StatefulWidget {
-  const DBViewerQueries({super.key});
+class DBQueryPage extends StatefulWidget {
+  const DBQueryPage({super.key});
 
   @override
-  State<DBViewerQueries> createState() => _DBViewerQueriesState();
+  State<DBQueryPage> createState() => _DBQueryPageState();
 }
 
-class _DBViewerQueriesState extends State<DBViewerQueries> {
+class _DBQueryPageState extends State<DBQueryPage> {
   final TextEditingController sqlCodeController = TextEditingController();
   List<Map<String, dynamic>> result = [];
   bool isQuerying = false;
