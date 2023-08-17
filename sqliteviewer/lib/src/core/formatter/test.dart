@@ -1,43 +1,24 @@
 import 'package:flutter/material.dart';
 
-class CustomInputField extends StatefulWidget {
-  const CustomInputField({super.key});
-
-  @override
-  CustomInputFieldState createState() => CustomInputFieldState();
-}
-
-class CustomInputFieldState extends State<CustomInputField> {
-  final TextEditingController _controller = TextEditingController();
-  List<String> keywords = ['flutter', 'custom', 'input', 'color'];
+class CustomInputField extends StatelessWidget {
+  final String text;
+  final Map<String, Color> keywords;
+  const CustomInputField(
+      {super.key, required this.keywords, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _controller,
-          onChanged: (text) {
-            setState(() {}); // Trigger a rebuild on text change
-          },
-          decoration: const InputDecoration(labelText: 'Type something...'),
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+      ),
+      child: RichText(
+        text: TextSpan(
+          style: const TextStyle(fontSize: 16),
+          children: _buildTextSpans(text),
         ),
-        const SizedBox(height: 10),
-        const Text('Output:'),
-        const SizedBox(height: 5),
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-          ),
-          child: RichText(
-            text: TextSpan(
-              style: const TextStyle(fontSize: 16),
-              children: _buildTextSpans(_controller.text),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -47,16 +28,20 @@ class CustomInputFieldState extends State<CustomInputField> {
 
     for (String word in words) {
       bool isKeyword = false;
-
-      if (keywords.contains(word.toLowerCase())) {
-        isKeyword = true;
+      Color? textColor;
+      for (final MapEntry<String, Color> item in keywords.entries) {
+        if (word.toLowerCase() == item.key.toLowerCase()) {
+          isKeyword = true;
+          textColor = item.value;
+          break;
+        }
       }
 
       if (isKeyword) {
         textSpans.add(
           TextSpan(
             text: '$word '.toUpperCase(),
-            style: const TextStyle(color: Colors.amber),
+            style: TextStyle(color: textColor),
           ),
         );
       } else {
@@ -67,11 +52,5 @@ class CustomInputFieldState extends State<CustomInputField> {
     }
 
     return textSpans;
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }

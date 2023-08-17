@@ -34,32 +34,6 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
     });
   }
 
-  String getFormattedText() {
-    final List<TextSpan> textSpans = [];
-    final List<String> words = sqlCodeController.text.split(' ');
-
-    for (String word in words) {
-      Color textColor = Colors.black; // Default color
-
-      for (String keyword in sqlKeywordColors.keys) {
-        if (word.toLowerCase() == keyword.toLowerCase()) {
-          textColor = sqlKeywordColors[keyword]!;
-          break;
-        }
-      }
-
-      textSpans.add(
-        TextSpan(
-          text: '$word ',
-          style: TextStyle(color: textColor),
-        ),
-      );
-    }
-
-    final formattedText = TextSpan(children: textSpans).toPlainText();
-    return formattedText;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +55,6 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
               ],
             ),
           ),
-          const CustomInputField(),
           Flexible(
               child: Scrollbar(
             thumbVisibility: true,
@@ -92,14 +65,15 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
               expands: true,
               decoration: const InputDecoration(),
               inputFormatters: [
-                ColoredTextFormatter(sqlKeywordColors),
+                ColoredTextFormatter(sqlLangKeyWordMap),
               ],
               onChanged: (value) {
                 setState(() {});
               },
             ),
           )),
-          Text(getFormattedText()),
+          CustomInputField(
+              text: sqlCodeController.text, keywords: sqlLangKeyWordMap),
           Flexible(
               child: Card(
             child: ListView(
