@@ -74,15 +74,15 @@ class _TableContentDataGridState extends State<TableContentDataGrid> {
         : SfDataGrid(
             source: dataSource,
             rowsPerPage: _rowsPerPage,
-            gridLinesVisibility: GridLinesVisibility.both,
-            headerGridLinesVisibility: GridLinesVisibility.both,
-            allowColumnsResizing: true,
+            columns: dataSource.header(),
             allowEditing: true,
             allowSorting: true,
             allowFiltering: true,
-            columnWidthMode: ColumnWidthMode.fitByColumnName,
             highlightRowOnHover: true,
-            columns: dataSource.header(),
+            allowColumnsResizing: true,
+            gridLinesVisibility: GridLinesVisibility.both,
+            headerGridLinesVisibility: GridLinesVisibility.both,
+            columnWidthMode: ColumnWidthMode.fitByColumnName,
           );
   }
 
@@ -93,6 +93,7 @@ class _TableContentDataGridState extends State<TableContentDataGrid> {
       pageCount: widget.data.isEmpty
           ? 1
           : (widget.data.length / _rowsPerPage).ceil().toDouble(),
+      navigationItemWidth: 30,
       onRowsPerPageChanged: (int? rowsPerPage) {
         setState(() {
           _rowsPerPage = rowsPerPage!;
@@ -105,7 +106,10 @@ class _TableContentDataGridState extends State<TableContentDataGrid> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildDataGrid(),
-      bottomNavigationBar: _bottomBar(),
+      bottomNavigationBar: BottomAppBar(
+        padding: const EdgeInsets.all(0),
+        child: _bottomBar(),
+      ),
     );
   }
 }
