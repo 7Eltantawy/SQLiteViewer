@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/features/db_table_content_viewer/db_table_content_viewer.dart';
+
+import '../../features/db_table_content_viewer/db_table_columns_select.dart';
 
 class DBTableCard extends StatelessWidget {
   final String tableName;
@@ -19,7 +20,7 @@ class DBTableCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return DBTableContentViewer(tableName: tableName);
+              return DBTableColumnsSelectViewer(tableName: tableName);
             },
           ),
         );

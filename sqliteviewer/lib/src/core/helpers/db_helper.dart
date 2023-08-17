@@ -43,6 +43,12 @@ class DatabaseHelper {
     return await db.rawQuery("SELECT * FROM $tableName");
   }
 
+  Future<List<Map<String, dynamic>>> getColumnNames(String tableName) async {
+    final db = await database();
+
+    return await db.rawQuery('PRAGMA table_info($tableName)');
+  }
+
   Future<List<Map<String, dynamic>>> query(String query) async {
     final db = await database();
 
