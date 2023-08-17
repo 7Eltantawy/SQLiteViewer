@@ -76,6 +76,25 @@ class _ListMapDataSource extends DataGridSource {
   final List<Map<String, dynamic>> _data;
   final ValueChanged<String> onCellPressed;
 
+  /// Table Header
+  List<GridColumn> header() => <GridColumn>[
+        for (final key in _data.first.keys)
+          GridColumn(
+            columnName: key,
+            label: Container(
+              padding: const EdgeInsets.all(8),
+              alignment: Alignment.centerRight,
+              child: Text(
+                key,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+      ];
+
   @override
   List<DataGridRow> get rows {
     final List<DataGridRow> rows = [];
@@ -113,25 +132,6 @@ class _ListMapDataSource extends DataGridSource {
       );
     }
   }
-
-  /// Table Header
-  List<GridColumn> header() => <GridColumn>[
-        for (final key in _data.first.keys)
-          GridColumn(
-            columnName: key,
-            label: Container(
-              padding: const EdgeInsets.all(8),
-              alignment: Alignment.centerRight,
-              child: Text(
-                key,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-      ];
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
