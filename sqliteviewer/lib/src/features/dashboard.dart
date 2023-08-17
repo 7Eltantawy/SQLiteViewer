@@ -36,7 +36,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("SQLite Viewer"),
+        centerTitle: true,
+      ),
       body: ListView.builder(
         itemCount: openedPaths.length,
         itemBuilder: (context, index) {
