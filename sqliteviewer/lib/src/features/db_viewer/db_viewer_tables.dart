@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/widgets/db_table_card.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
@@ -22,7 +21,7 @@ class _DBViewerTablesState extends State<DBViewerTables> {
 
   Future initData() async {
     tables = await DatabaseHelper.instance.getAllTables();
-    appPrint(tables);
+
     setState(() {
       isLoading = false;
     });

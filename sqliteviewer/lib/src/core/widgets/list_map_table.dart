@@ -16,6 +16,8 @@ class ListMapTable extends StatelessWidget {
 
     return SfDataGrid(
       rowsPerPage: 10,
+      gridLinesVisibility: GridLinesVisibility.both,
+      headerGridLinesVisibility: GridLinesVisibility.both,
       allowColumnsDragging: true,
       allowColumnsResizing: true,
       columnResizeMode: ColumnResizeMode.onResizeEnd,

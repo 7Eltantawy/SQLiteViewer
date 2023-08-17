@@ -32,13 +32,27 @@ class _DBTableColumnsSelectViewerState
 
   Future initData() async {
     result = await DatabaseHelper.instance.getColumnNames(widget.tableName);
+    appPrint(result);
     allColumns = result.map((column) => column['name'] as String).toList();
     selectedColumns.addAll(allColumns);
 
-    appPrint(result);
     setState(() {
       isLoading = false;
     });
+  }
+
+  void sortAsInDatabase() {
+    /// Sort columns as in database table
+    selectedColumns.sort(
+      (a, b) {
+        final aMap = result.firstWhere((element) => element["name"] == a);
+        final bMap = result.firstWhere((element) => element["name"] == b);
+
+        final aId = (aMap["cid"] as int);
+        final bId = (bMap["cid"] as int);
+        return aId.compareTo(bId);
+      },
+    );
   }
 
   @override
@@ -76,15 +90,8 @@ class _DBTableColumnsSelectViewerState
         child: ListTile(
           title: const Text("Show", textAlign: TextAlign.center),
           onTap: () {
-            /// Sort columns as in database table
-            selectedColumns.sort(
-              (a, b) {
-                final aMap =
-                    result.firstWhere((element) => element["name"] == a);
-
-                return (aMap["cid"] as int);
-              },
-            );
+            sortAsInDatabase();
+            appPrint(selectedColumns);
             Navigator.push(
               context,
               MaterialPageRoute(

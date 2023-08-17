@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/widgets/list_map_table.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
@@ -32,7 +31,7 @@ class _DBTableContentViewerState extends State<DBTableContentViewer> {
   Future initData() async {
     result = await DatabaseHelper.instance
         .getTableContentForSelectedColumns(widget.tableName, widget.columns);
-    appPrint(result);
+
     setState(() {
       isLoading = false;
     });

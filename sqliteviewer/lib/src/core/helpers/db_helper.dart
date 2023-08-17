@@ -1,5 +1,4 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._internal();
@@ -61,7 +60,6 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> query(String query) async {
     final db = await database();
 
-    appPrint(query);
     final maps = await db.rawQuery(
       query,
     );
