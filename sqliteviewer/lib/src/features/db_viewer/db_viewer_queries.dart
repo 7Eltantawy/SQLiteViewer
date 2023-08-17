@@ -3,6 +3,7 @@ import 'package:sqliteviewer/src/core/formatter/sql_keywords_formatter.dart';
 import 'package:sqliteviewer/src/core/formatter/test.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/sql/keywords.dart';
+import 'package:sqliteviewer/src/core/widgets/list_map_table.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBViewerQueries extends StatefulWidget {
@@ -63,7 +64,7 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
               ],
             ),
           ),
-          Flexible(
+          Expanded(
               child: Scrollbar(
             thumbVisibility: true,
             child: TextField(
@@ -84,20 +85,9 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
             text: sqlCodeController.text,
             keywords: sqlLangKeyWordMap,
           ),
-          Flexible(
+          Expanded(
               child: Card(
-            child: ListView.builder(
-              itemCount: result.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(result[index]
-                      .toString()
-                      .replaceAll(",", ",\n")
-                      .replaceAll("{", "{\n")
-                      .replaceAll("}", "\n}")),
-                );
-              },
-            ),
+            child: ListMapTable(data: result),
           )),
         ],
       ),

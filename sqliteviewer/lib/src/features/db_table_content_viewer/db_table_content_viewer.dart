@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
+import 'package:sqliteviewer/src/core/widgets/list_map_table.dart';
 import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBTableContentViewer extends StatefulWidget {
@@ -44,24 +45,7 @@ class _DBTableContentViewerState extends State<DBTableContentViewer> {
         title: Text(widget.tableName),
         centerTitle: true,
       ),
-      body: isLoading
-          ? const Loading()
-          : ListView.separated(
-              itemCount: result.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: const Icon(Icons.table_rows_outlined),
-                  title: SelectableText(result[index]
-                      .toString()
-                      .replaceAll(",", ",\n")
-                      .replaceAll("{", "{\n")
-                      .replaceAll("}", "\n}")),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-            ),
+      body: isLoading ? const Loading() : ListMapTable(data: result),
     );
   }
 }
