@@ -51,6 +51,25 @@ class DatabaseHelper {
     return await db.query(tableName, columns: columns);
   }
 
+  Future<List<Map<String, dynamic>>>
+      getTableContentForSelectedColumnsPagination(
+    String tableName,
+    List<String> columns,
+    int pageNumber,
+    int pageSize,
+  ) async {
+    final db = await database();
+
+    int offset = (pageNumber - 1) * pageSize;
+
+    return await db.query(
+      tableName,
+      columns: columns,
+      limit: pageSize,
+      offset: offset,
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getColumnNames(String tableName) async {
     final db = await database();
 
