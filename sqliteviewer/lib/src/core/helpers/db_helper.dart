@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._internal();
@@ -34,5 +35,16 @@ class DatabaseHelper {
       "SELECT name FROM sqlite_master WHERE type='table';",
     );
     return tables.map((row) => row['name'] as String).toList();
+  }
+
+  Future<String> query(String query) async {
+    final db = await database();
+
+    appPrint(query);
+    final maps = await db.rawQuery(
+      query,
+    );
+
+    return maps.toString();
   }
 }

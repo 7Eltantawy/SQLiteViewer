@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 void appPrint(Object? object) {
-  printColor(object, color: PrintColors.green);
+  printColor('[APP] $object', color: PrintColors.green);
 }
 
 void printColor(Object? object, {int color = 0}) {

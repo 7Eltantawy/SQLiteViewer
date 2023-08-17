@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/core/formatter/sql_keywords_formatter.dart';
+import 'package:sqliteviewer/src/core/formatter/test.dart';
+import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
+import 'package:sqliteviewer/src/core/sql/keywords.dart';
+import 'package:sqliteviewer/src/core/widgets/loading.dart';
 
 class DBViewerQueries extends StatefulWidget {
   const DBViewerQueries({super.key});
@@ -9,6 +14,52 @@ class DBViewerQueries extends StatefulWidget {
 
 class _DBViewerQueriesState extends State<DBViewerQueries> {
   final TextEditingController sqlCodeController = TextEditingController();
+  String result = "";
+  bool isQuerying = false;
+
+  Future query() async {
+    setState(() {
+      isQuerying = true;
+    });
+
+    try {
+      result =
+          await DatabaseHelper.instance.query(sqlCodeController.text.trim());
+    } catch (e) {
+      result = e.toString();
+    }
+
+    setState(() {
+      isQuerying = false;
+    });
+  }
+
+  String getFormattedText() {
+    final List<TextSpan> textSpans = [];
+    final List<String> words = sqlCodeController.text.split(' ');
+
+    for (String word in words) {
+      Color textColor = Colors.black; // Default color
+
+      for (String keyword in sqlKeywordColors.keys) {
+        if (word.toLowerCase() == keyword.toLowerCase()) {
+          textColor = sqlKeywordColors[keyword]!;
+          break;
+        }
+      }
+
+      textSpans.add(
+        TextSpan(
+          text: '$word ',
+          style: TextStyle(color: textColor),
+        ),
+      );
+    }
+
+    final formattedText = TextSpan(children: textSpans).toPlainText();
+    return formattedText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,31 +68,46 @@ class _DBViewerQueriesState extends State<DBViewerQueries> {
           Card(
             child: Row(
               children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.play_circle_outline,
-                  ),
-                  onPressed: () {},
-                )
+                isQuerying
+                    ? const Loading()
+                    : IconButton(
+                        icon: const Icon(
+                          Icons.play_circle_outline,
+                        ),
+                        onPressed: () async {
+                          await query();
+                        },
+                      )
               ],
             ),
           ),
-          const Flexible(
+          const CustomInputField(),
+          Flexible(
               child: Scrollbar(
             thumbVisibility: true,
             child: TextField(
+              controller: sqlCodeController,
               maxLines: null,
               keyboardType: TextInputType.multiline,
               expands: true,
-              decoration: InputDecoration(),
+              decoration: const InputDecoration(),
+              inputFormatters: [
+                ColoredTextFormatter(sqlKeywordColors),
+              ],
+              onChanged: (value) {
+                setState(() {});
+              },
             ),
           )),
+          Text(getFormattedText()),
           Flexible(
               child: Card(
             child: ListView(
-              children: const [
-                Text(
-                  "data",
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: result,
+                  ),
                 )
               ],
             ),
