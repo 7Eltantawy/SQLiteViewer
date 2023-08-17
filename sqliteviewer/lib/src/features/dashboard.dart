@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
+import 'package:sqliteviewer/src/core/utils/show_toast.dart';
 import 'package:sqliteviewer/src/core/widgets/db_file_card.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -22,7 +23,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (result == null) return;
     String filePath = result.files.single.path!;
 
-    if (!filePath.endsWith('.db')) return;
+    if (!filePath.endsWith('.db')) {
+      showToast("Please select .db file");
+
+      return;
+    }
 
     setState(() {
       selectedFilePath = filePath;
