@@ -18,11 +18,7 @@ class DBTableCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) {
-              return DBTableColumnsSelectViewer(tableName: tableName);
-            },
-          ),
+          DBTableColumnsSelectViewer.route(tableName),
         );
       },
     );

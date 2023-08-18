@@ -12,6 +12,15 @@ class DBTableColumnsSelectViewer extends StatefulWidget {
     required this.tableName,
   }) : super(key: key);
 
+  static const String routeName = "/db_table_select_columns";
+
+  static Route route(String tableName) {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => DBTableColumnsSelectViewer(tableName: tableName),
+    );
+  }
+
   @override
   State<DBTableColumnsSelectViewer> createState() =>
       _DBTableColumnsSelectViewerState();
@@ -104,13 +113,9 @@ class _DBTableColumnsSelectViewerState
             sortAsInDatabase();
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return DBTableContentViewer(
-                    tableName: widget.tableName,
-                    columns: selectedColumns,
-                  );
-                },
+              DBTableContentViewer.route(
+                tableName: widget.tableName,
+                columns: selectedColumns,
               ),
             );
           },

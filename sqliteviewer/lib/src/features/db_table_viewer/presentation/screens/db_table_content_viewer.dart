@@ -15,6 +15,19 @@ class DBTableContentViewer extends StatefulWidget {
     required this.columns,
   }) : super(key: key);
 
+  static const String routeName = "/db_table_content";
+
+  static Route route(
+      {required String tableName, required List<String> columns}) {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: routeName),
+      builder: (_) => DBTableContentViewer(
+        tableName: tableName,
+        columns: columns,
+      ),
+    );
+  }
+
   @override
   State<DBTableContentViewer> createState() => _DBTableContentViewerState();
 }
