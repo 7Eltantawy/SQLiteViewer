@@ -30,13 +30,13 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
       return;
     }
 
-    final List<String> openedPaths = state.openedPaths;
+    final List<String> openedPaths = LocalStorageRepo.lastOpenedFiles();
 
     final String selectedFilePath = filePath;
     if (state.openedPaths.contains(selectedFilePath)) {
-      state.openedPaths.removeWhere((e) => e == selectedFilePath);
+      openedPaths.removeWhere((e) => e == selectedFilePath);
     }
-    state.openedPaths.add(selectedFilePath);
+    openedPaths.add(selectedFilePath);
 
     await LocalStorageRepo.setLastOpenedFiles(openedPaths);
 
