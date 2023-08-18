@@ -82,13 +82,28 @@ class _DBTableColumnsSelectViewerState
                 return CheckboxListTile(
                   title: Text(columnName),
                   value: selectedColumns.contains(columnName),
-                  subtitle: Row(
+                  subtitle: Wrap(
+                    spacing: 20,
                     children: [
-                      Text(column["type"].toString()),
-                      if (isPK) ...[
-                        const SizedBox(width: 20),
-                        Icon(isPK ? Icons.key : Icons.boy)
-                      ]
+                      Text(
+                        column["type"].toString(),
+                        style: const TextStyle(
+                          color: Colors.purpleAccent,
+                        ),
+                      ),
+                      Text(
+                        column["notnull"] == 0 ? "NULLABLE" : "NOT NULL",
+                        style: const TextStyle(
+                          color: Colors.purpleAccent,
+                        ),
+                      ),
+                      Text(
+                        "Default Value: ${column["dft_value"]}",
+                        style: const TextStyle(
+                          color: Colors.purpleAccent,
+                        ),
+                      ),
+                      if (isPK) Icon(isPK ? Icons.key : Icons.boy),
                     ],
                   ),
                   onChanged: (bool? value) {
