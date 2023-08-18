@@ -43,6 +43,8 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
       isQuerying: false,
       result: result,
     ));
+
+    loadTables();
   }
 
   @override
