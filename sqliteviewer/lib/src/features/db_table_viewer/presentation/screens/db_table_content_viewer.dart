@@ -17,8 +17,10 @@ class DBTableContentViewer extends StatefulWidget {
 
   static const String routeName = "/db_table_content";
 
-  static Route route(
-      {required String tableName, required List<String> columns}) {
+  static Route route({
+    required String tableName,
+    required List<String> columns,
+  }) {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (_) => DBTableContentViewer(
