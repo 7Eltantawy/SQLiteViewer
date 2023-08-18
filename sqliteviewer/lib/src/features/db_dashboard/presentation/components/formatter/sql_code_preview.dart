@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class SQLCodePreview extends StatelessWidget {
   final String text;
   final List<String> keywords;
   final List<String> tables;
+  final Map<String, List<String>> tablesColumns;
   final Color keywordsColor;
   final Color tablesColor;
+  final Color tablesColumnsColor;
 
   const SQLCodePreview({
     super.key,
@@ -14,6 +17,8 @@ class SQLCodePreview extends StatelessWidget {
     required this.tables,
     this.keywordsColor = Colors.deepOrange,
     this.tablesColor = Colors.teal,
+    this.tablesColumnsColor = Colors.amber,
+    required this.tablesColumns,
   });
 
   @override
@@ -30,6 +35,8 @@ class SQLCodePreview extends StatelessWidget {
   }
 
   List<TextSpan> _buildTextSpans(String input) {
+    appPrint(tablesColumns);
+
     List<TextSpan> textSpans = [];
     List<String> lines = input.split('\n');
 
@@ -60,6 +67,7 @@ class SQLCodePreview extends StatelessWidget {
   }
 
   TextSpan buildTextSpan(String word) {
+    String wordToSet = word;
     bool isKeyword = false;
     Color? textColor;
 
@@ -67,17 +75,42 @@ class SQLCodePreview extends StatelessWidget {
       if (word.toLowerCase() == item.toLowerCase()) {
         isKeyword = true;
         textColor = keywordsColor;
+        wordToSet = word.toUpperCase();
         break;
       }
     }
 
-    for (final String item in tables) {
-      if (word.toLowerCase() == item.toLowerCase()) {
-        isKeyword = true;
-        textColor = tablesColor;
-        break;
+    if (!isKeyword) {
+      for (final String item in tables) {
+        if (word.toLowerCase() == item.toLowerCase()) {
+          isKeyword = true;
+          textColor = tablesColor;
+          wordToSet = word.toUpperCase();
+          break;
+        }
       }
     }
+
+    if (!isKeyword) {
+      final flatten = tablesColumns.entries.fold(
+        <String>[],
+        (previousValue, element) => previousValue
+          ..addAll(
+            element.value.map((e) => "${element.key}.$e").toList(),
+          ),
+      );
+
+      // appPrint(flatten);
+      for (final String item in flatten) {
+        if (word.toLowerCase() == item.toLowerCase()) {
+          isKeyword = true;
+          textColor = tablesColumnsColor;
+          wordToSet = word;
+          break;
+        }
+      }
+    }
+
     const TextStyle sharedStyle = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
@@ -85,14 +118,14 @@ class SQLCodePreview extends StatelessWidget {
 
     if (isKeyword) {
       return TextSpan(
-        text: word.toUpperCase(),
+        text: wordToSet,
         style: sharedStyle.copyWith(
           color: textColor,
         ),
       );
     } else {
       return TextSpan(
-        text: word,
+        text: wordToSet,
         style: sharedStyle,
       );
     }

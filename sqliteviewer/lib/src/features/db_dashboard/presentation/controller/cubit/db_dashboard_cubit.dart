@@ -19,6 +19,7 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
           tables: [],
           result: [],
           isQuerying: false,
+          tablesColumns: {},
         )) {
     DatabaseHelper.path = dbPath;
     loadTables();
@@ -37,8 +38,22 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
 
   Future<void> loadTables() async {
     final tables = await DatabaseHelper.instance.getAllTables();
+    final Map<String, List<String>> tablesColumns = {};
 
-    emit(state.copyWith(tables: tables, isLoading: false));
+    for (var table in tables) {
+      final List<String> columns =
+          (await DatabaseHelper.instance.getColumnNames(table))
+              .map((column) => column['name'] as String)
+              .toList();
+
+      tablesColumns[table] = columns;
+    }
+
+    emit(state.copyWith(
+      tables: tables,
+      isLoading: false,
+      tablesColumns: tablesColumns,
+    ));
   }
 
   Future query() async {
