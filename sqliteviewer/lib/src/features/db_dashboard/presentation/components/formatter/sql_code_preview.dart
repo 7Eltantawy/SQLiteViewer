@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class SQLCodePreview extends StatelessWidget {
   final String text;
@@ -33,8 +32,6 @@ class SQLCodePreview extends StatelessWidget {
   }
 
   List<TextSpan> _buildTextSpans(String input) {
-    appPrint(tablesColumns);
-
     List<TextSpan> textSpans = [];
     List<String> lines = input.split('\n');
 
@@ -47,7 +44,7 @@ class SQLCodePreview extends StatelessWidget {
       for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
         String word = words[wordIndex];
 
-        textSpans.add(buildTextSpan(word));
+        textSpans.addAll(buildTextSpan(word));
 
         // Add a space after each word, except the last word in the line
         if (wordIndex < words.length - 1) {
@@ -64,68 +61,69 @@ class SQLCodePreview extends StatelessWidget {
     return textSpans;
   }
 
-  TextSpan buildTextSpan(String word) {
-    String wordToSet = word;
-    bool isKeyword = false;
-    Color? textColor;
-
-    for (final String item in keywords) {
-      if (word.toLowerCase() == item.toLowerCase()) {
-        isKeyword = true;
-        textColor = keywordsColor;
-        wordToSet = word.toUpperCase();
-        break;
-      }
-    }
-
-    if (!isKeyword) {
-      for (final String item in tablesColumns.keys) {
-        if (word.toLowerCase() == item.toLowerCase()) {
-          isKeyword = true;
-          textColor = tablesColor;
-          wordToSet = word.toUpperCase();
-          break;
-        }
-      }
-    }
-
-    if (!isKeyword) {
-      final flatten = tablesColumns.entries.fold(
-        <String>[],
-        (previousValue, element) => previousValue
-          ..addAll(
-            element.value.map((e) => "${element.key}.$e").toList(),
-          ),
-      );
-
-      // appPrint(flatten);
-      for (final String item in flatten) {
-        if (word.toLowerCase() == item.toLowerCase()) {
-          isKeyword = true;
-          textColor = tablesColumnsColor;
-          wordToSet = word;
-          break;
-        }
-      }
-    }
-
+  List<TextSpan> buildTextSpan(String word) {
     const TextStyle sharedStyle = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
     );
 
-    if (isKeyword) {
-      return TextSpan(
-        text: wordToSet,
-        style: sharedStyle.copyWith(
-          color: textColor,
-        ),
-      );
-    } else {
-      return TextSpan(
-        text: wordToSet,
-        style: sharedStyle,
-      );
+    for (final String item in keywords) {
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return [
+          TextSpan(
+            text: word.toUpperCase(),
+            style: sharedStyle.copyWith(
+              color: keywordsColor,
+            ),
+          )
+        ];
+      }
     }
+
+    for (final String item in tablesColumns.keys) {
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return [
+          TextSpan(
+            text: word.toUpperCase(),
+            style: sharedStyle.copyWith(
+              color: tablesColor,
+            ),
+          )
+        ];
+      }
+    }
+
+    final flatten = tablesColumns.entries.fold(
+      <String>[],
+      (previousValue, element) => previousValue
+        ..addAll(
+          element.value.map((e) => "${element.key}.$e").toList(),
+        ),
+    );
+    for (final String item in flatten) {
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return [
+          TextSpan(
+            text: word.split('.')[0].toUpperCase(),
+            style: sharedStyle.copyWith(
+              color: tablesColor,
+            ),
+          ),
+          TextSpan(
+            text: ".${word.split('.')[1]}",
+            style: sharedStyle.copyWith(
+              color: tablesColumnsColor,
+            ),
+          )
+        ];
+      }
+    }
+
+    return [
+      TextSpan(
+        text: word,
+        style: sharedStyle,
+      )
+    ];
   }
 }
