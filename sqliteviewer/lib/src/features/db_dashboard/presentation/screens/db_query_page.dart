@@ -20,21 +20,27 @@ class DBQueryPage extends StatelessWidget {
               Card(
                 child: Row(
                   children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.play_circle_outline,
+                    Tooltip(
+                      message: "Execute SQL",
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.play_circle_outline,
+                        ),
+                        onPressed: () async {
+                          context.read<DbDashboardCubit>().query();
+                        },
                       ),
-                      onPressed: () async {
-                        context.read<DbDashboardCubit>().query();
-                      },
                     ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.close,
+                    Tooltip(
+                      message: "Clear SQL Text",
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                        ),
+                        onPressed: () async {
+                          context.read<DbDashboardCubit>().clearQuery();
+                        },
                       ),
-                      onPressed: () async {
-                        context.read<DbDashboardCubit>().clearQuery();
-                      },
                     ),
                   ],
                 ),
