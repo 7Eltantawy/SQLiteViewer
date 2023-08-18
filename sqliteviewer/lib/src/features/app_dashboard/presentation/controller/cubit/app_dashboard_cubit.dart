@@ -42,5 +42,12 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
     emit(state.copyWith(openedPaths: openedPaths));
   }
 
+  Future<void> deletePath(String pathToDelete) async {
+    final List<String> openedPaths = List.from(state.openedPaths);
+    state.openedPaths.removeWhere((e) => e == pathToDelete);
+    await LocalStorageRepo.setLastOpenedFiles(openedPaths);
+    emit(state.copyWith(openedPaths: LocalStorageRepo.lastOpenedFiles()));
+  }
+
   Future updateLastOpenedFile() async {}
 }
