@@ -70,7 +70,6 @@ class DBQueryPage extends StatelessWidget {
                                 .read<DbDashboardCubit>()
                                 .sqlCodeController
                                 .text,
-                            tables: state.tables,
                             tablesColumns: state.tablesColumns,
                             keywords: sqliteReservedKeywords,
                           ),

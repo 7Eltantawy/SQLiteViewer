@@ -4,7 +4,6 @@ import 'package:sqliteviewer/src/core/utils/print.dart';
 class SQLCodePreview extends StatelessWidget {
   final String text;
   final List<String> keywords;
-  final List<String> tables;
   final Map<String, List<String>> tablesColumns;
   final Color keywordsColor;
   final Color tablesColor;
@@ -14,7 +13,6 @@ class SQLCodePreview extends StatelessWidget {
     super.key,
     required this.keywords,
     required this.text,
-    required this.tables,
     this.keywordsColor = Colors.deepOrange,
     this.tablesColor = Colors.teal,
     this.tablesColumnsColor = Colors.amber,
@@ -81,7 +79,7 @@ class SQLCodePreview extends StatelessWidget {
     }
 
     if (!isKeyword) {
-      for (final String item in tables) {
+      for (final String item in tablesColumns.keys) {
         if (word.toLowerCase() == item.toLowerCase()) {
           isKeyword = true;
           textColor = tablesColor;
