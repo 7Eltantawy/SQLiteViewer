@@ -1,21 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class SQLCodePreview extends StatelessWidget {
   final String text;
   final List<String> keywords;
   final Map<String, List<String>> tablesColumns;
-  final Color keywordsColor;
-  final Color tablesColor;
-  final Color tablesColumnsColor;
+  final SQLCodePreviewColorSettings colorSettings;
 
   const SQLCodePreview({
     super.key,
     required this.keywords,
     required this.text,
-    this.keywordsColor = Colors.deepOrange,
-    this.tablesColor = Colors.teal,
-    this.tablesColumnsColor = Colors.amber,
     required this.tablesColumns,
+    this.colorSettings = SQLCodePreviewColorSettings.set01,
   });
 
   @override
@@ -73,7 +70,7 @@ class SQLCodePreview extends StatelessWidget {
           TextSpan(
             text: word.toUpperCase(),
             style: sharedStyle.copyWith(
-              color: keywordsColor,
+              color: colorSettings.keywordsColor,
             ),
           )
         ];
@@ -86,7 +83,7 @@ class SQLCodePreview extends StatelessWidget {
           TextSpan(
             text: word.toUpperCase(),
             style: sharedStyle.copyWith(
-              color: tablesColor,
+              color: colorSettings.tablesColor,
             ),
           )
         ];
@@ -106,13 +103,13 @@ class SQLCodePreview extends StatelessWidget {
           TextSpan(
             text: word.split('.')[0].toUpperCase(),
             style: sharedStyle.copyWith(
-              color: tablesColor,
+              color: colorSettings.tablesColor,
             ),
           ),
           TextSpan(
             text: ".${word.split('.')[1]}",
             style: sharedStyle.copyWith(
-              color: tablesColumnsColor,
+              color: colorSettings.tablesColumnsColor,
             ),
           )
         ];
@@ -126,4 +123,67 @@ class SQLCodePreview extends StatelessWidget {
       )
     ];
   }
+}
+
+class SQLCodePreviewColorSettings {
+  final Color keywordsColor;
+  final Color tablesColor;
+  final Color tablesColumnsColor;
+
+  const SQLCodePreviewColorSettings({
+    required this.keywordsColor,
+    required this.tablesColor,
+    required this.tablesColumnsColor,
+  });
+
+  static const SQLCodePreviewColorSettings set01 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF5D6D7E),
+    tablesColor: Color(0xFF3498DB),
+    tablesColumnsColor: Color(0xFFE67E22),
+  );
+  static const SQLCodePreviewColorSettings set02 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF3772FF),
+    tablesColor: Color(0xFF53D769),
+    tablesColumnsColor: Color(0xFFFFD236),
+  );
+  static const SQLCodePreviewColorSettings set03 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF8E44AD),
+    tablesColor: Color(0xFFC0392B),
+    tablesColumnsColor: Color(0xFFD35400),
+  );
+  static const SQLCodePreviewColorSettings set04 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF2C3E50),
+    tablesColor: Color(0xFF34495E),
+    tablesColumnsColor: Color(0xFFBDC3C7),
+  );
+  static const SQLCodePreviewColorSettings set05 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF27AE60),
+    tablesColor: Color(0xFF1ABC9C),
+    tablesColumnsColor: Color(0xFFF39C12),
+  );
+  static const SQLCodePreviewColorSettings set06 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF9B59B6),
+    tablesColor: Color(0xFF3498DB),
+    tablesColumnsColor: Color(0xFFE74C3C),
+  );
+  static const SQLCodePreviewColorSettings set07 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFFF39C12),
+    tablesColor: Color(0xFFD4AC0D),
+    tablesColumnsColor: Color(0xFFE67E22),
+  );
+  static const SQLCodePreviewColorSettings set08 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF1E8449),
+    tablesColor: Color(0xFF117A65),
+    tablesColumnsColor: Color(0xFF148F77),
+  );
+  static const SQLCodePreviewColorSettings set09 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFFC0392B),
+    tablesColor: Color(0xFFE74C3C),
+    tablesColumnsColor: Color(0xFFC23616),
+  );
+  static const SQLCodePreviewColorSettings set10 = SQLCodePreviewColorSettings(
+    keywordsColor: Color(0xFF34495E),
+    tablesColor: Color(0xFFD4AC0D),
+    tablesColumnsColor: Color(0xFF27AE60),
+  );
 }
