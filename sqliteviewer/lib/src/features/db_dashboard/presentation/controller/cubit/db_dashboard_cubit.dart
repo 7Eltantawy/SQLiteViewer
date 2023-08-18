@@ -77,6 +77,10 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
     loadTables();
   }
 
+  void clearQuery() {
+    sqlCodeController.clear();
+  }
+
   @override
   Future<void> close() {
     sqlCodeController.dispose();

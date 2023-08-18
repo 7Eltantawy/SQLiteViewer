@@ -27,7 +27,15 @@ class DBQueryPage extends StatelessWidget {
                       onPressed: () async {
                         context.read<DbDashboardCubit>().query();
                       },
-                    )
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.close,
+                      ),
+                      onPressed: () async {
+                        context.read<DbDashboardCubit>().clearQuery();
+                      },
+                    ),
                   ],
                 ),
               ),
