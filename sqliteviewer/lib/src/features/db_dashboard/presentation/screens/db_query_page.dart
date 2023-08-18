@@ -15,6 +15,7 @@ class DBQueryPage extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Card(
                 child: Row(
@@ -31,20 +32,23 @@ class DBQueryPage extends StatelessWidget {
                 ),
               ),
               Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
                   child: Scrollbar(
-                thumbVisibility: true,
-                child: TextField(
-                  controller:
-                      context.read<DbDashboardCubit>().sqlCodeController,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  expands: true,
-                  decoration: const InputDecoration(),
-                  // inputFormatters: [
-                  //   ColoredTextFormatter(sqliteReservedKeywords),
-                  // ],
+                    child: TextField(
+                      controller:
+                          context.read<DbDashboardCubit>().sqlCodeController,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      expands: true,
+
+                      // inputFormatters: [
+                      //   ColoredTextFormatter(sqliteReservedKeywords),
+                      // ],
+                    ),
+                  ),
                 ),
-              )),
+              ),
               ListenableBuilder(
                   listenable:
                       context.read<DbDashboardCubit>().sqlCodeController,
