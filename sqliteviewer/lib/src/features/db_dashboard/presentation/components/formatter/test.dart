@@ -14,7 +14,6 @@ class SQLCodePreview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: RichText(
-        textAlign: TextAlign.start,
         text: TextSpan(
           style: const TextStyle(fontSize: 16),
           children: _buildTextSpans(text),
