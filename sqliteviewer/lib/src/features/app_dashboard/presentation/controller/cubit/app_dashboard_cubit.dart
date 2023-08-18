@@ -17,9 +17,16 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
         );
 
   Future<void> pickDatabaseFromFiles() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
-    );
+    FilePickerResult? result;
+
+    try {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.any,
+      );
+    } catch (e) {
+      showToast(e.toString());
+      appPrint(e);
+    }
 
     if (result == null) return;
     String filePath = result.files.single.path!;
