@@ -15,7 +15,7 @@ class SQLCodePreview extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       child: RichText(
         text: TextSpan(
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 18),
           children: _buildTextSpans(text),
         ),
       ),
@@ -32,7 +32,7 @@ class SQLCodePreview extends StatelessWidget {
       for (final String item in keywords) {
         if (word.toLowerCase() == item.toLowerCase()) {
           isKeyword = true;
-          textColor = Colors.blue;
+          textColor = Colors.amber;
           break;
         }
       }
@@ -41,7 +41,10 @@ class SQLCodePreview extends StatelessWidget {
         textSpans.add(
           TextSpan(
             text: '$word '.toUpperCase(),
-            style: TextStyle(color: textColor),
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
       } else {
