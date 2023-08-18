@@ -46,6 +46,7 @@ class DatabaseHelper {
     String tableName,
     List<String> columns,
   ) async {
+    if (columns.isEmpty) return [];
     final db = await database();
 
     return await db.query(tableName, columns: columns);
@@ -58,6 +59,8 @@ class DatabaseHelper {
     int pageNumber,
     int pageSize,
   ) async {
+    if (columns.isEmpty) return [];
+
     final db = await database();
 
     int offset = (pageNumber - 1) * pageSize;
