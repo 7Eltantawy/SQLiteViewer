@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
+import 'package:sqliteviewer/src/features/app_dashboard/presentation/controller/cubit/app_dashboard_cubit.dart';
 import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_dashboard.dart';
 
 class DBFileCard extends StatelessWidget {
@@ -25,7 +27,9 @@ class DBFileCard extends StatelessWidget {
       ),
       subtitle: Text(dbPath),
       trailing: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          context.read<AppDashboardCubit>().deletePath(dbPath);
+        },
         icon: const Icon(Icons.delete),
       ),
       onTap: () async {
