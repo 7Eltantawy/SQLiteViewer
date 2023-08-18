@@ -12,7 +12,7 @@ class SQLCodePreview extends StatelessWidget {
     required this.keywords,
     required this.text,
     required this.tablesColumns,
-    this.colorSettings = SQLCodePreviewColorSettings.set01,
+    this.colorSettings = SQLCodePreviewColorSettings.set06,
   });
 
   @override
