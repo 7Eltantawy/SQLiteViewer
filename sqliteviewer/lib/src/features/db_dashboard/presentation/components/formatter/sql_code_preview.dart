@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class SQLCodePreview extends StatelessWidget {
   final String text;
@@ -29,10 +28,10 @@ class SQLCodePreview extends StatelessWidget {
     );
   }
 
+  static final englishText = RegExp(r'\w');
+
   List<TextSpan> tokenize(String text) {
     List<TextSpan> textSpans = [];
-
-    final englishText = RegExp(r'\w');
 
     // comment start with --
     bool isComment = false;
@@ -48,10 +47,10 @@ class SQLCodePreview extends StatelessWidget {
       final char = text[i];
 
       if (buffer == "") {
-        if (char == "'" || char == '"') {
-          isQuotedText = true;
-        } else if (char == "-") {
+        if (char == "-") {
           isComment = true;
+        } else if (char == "'" || char == '"') {
+          isQuotedText = true;
         } else if (englishText.hasMatch(char)) {
           isWord = true;
         } else {
@@ -61,37 +60,43 @@ class SQLCodePreview extends StatelessWidget {
               style: const TextStyle(color: Colors.blue),
             ),
           );
-
           continue;
         }
       }
 
-      buffer += char;
-
-      if (isWord && buffer.isNotEmpty) {
-        if (!englishText.hasMatch(char)) {
-          appPrint(buffer);
+      if (englishText.hasMatch(char)) {
+        buffer += char;
+      } else {
+        if (isWord) {
           textSpans.addAll(processWord(buffer));
           buffer = "";
+          textSpans.addAll(processWord(char));
+          isWord = false;
+        } else if (isComment) {
+          buffer += char;
+          if (char == "\n") {
+            textSpans.add(
+              TextSpan(
+                text: buffer,
+                style: const TextStyle(color: Colors.brown),
+              ),
+            );
+
+            buffer = "";
+            isComment = false;
+          }
+        } else if (isQuotedText) {
+          buffer += char;
+          if (buffer.length > 1 && buffer.trim()[0] == char) {
+            textSpans.add(
+              TextSpan(
+                text: buffer,
+                style: const TextStyle(color: Colors.amber),
+              ),
+            );
+            buffer = "";
+          }
         }
-      } else if (char == "\n") {
-        if (isComment) {
-          textSpans.add(
-            TextSpan(
-              text: buffer,
-              style: const TextStyle(color: Colors.brown),
-            ),
-          );
-        }
-        buffer = "";
-      } else if (isQuotedText && buffer.length > 1 && buffer[0] == char) {
-        textSpans.add(
-          TextSpan(
-            text: buffer,
-            style: const TextStyle(color: Colors.amber),
-          ),
-        );
-        buffer = "";
       }
     }
 
