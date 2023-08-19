@@ -36,7 +36,7 @@ class DBDashboard extends StatelessWidget {
           bottom: const TabBar(
             tabs: [
               Tab(child: Text("Tables")),
-              Tab(child: Text("Queries")),
+              Tab(child: Text("Query")),
             ],
           ),
         ),
