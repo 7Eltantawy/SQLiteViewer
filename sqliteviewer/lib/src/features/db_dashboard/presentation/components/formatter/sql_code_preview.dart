@@ -5,17 +5,24 @@ class SQLCodePreview extends StatelessWidget {
   final String text;
   final List<String> keywords;
   final List<String> dataTypeKeywords;
+  final List<String> tableColumnsNames;
   final Map<String, List<String>> tablesColumns;
   final SQLCodePreviewColorSettings colorSettings;
 
-  const SQLCodePreview({
+  SQLCodePreview({
     super.key,
     required this.keywords,
     required this.dataTypeKeywords,
     required this.text,
     required this.tablesColumns,
     this.colorSettings = SQLCodePreviewColorSettings.colorScheme2,
-  });
+  }) : tableColumnsNames = tablesColumns.entries.fold(
+          <String>[],
+          (previousValue, element) => previousValue
+            ..addAll(
+              element.value.map((e) => e).toList(),
+            ),
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -116,19 +123,6 @@ class SQLCodePreview extends StatelessWidget {
       fontSize: 15,
     );
 
-    for (final String item in keywords) {
-      if (word.toLowerCase().trim() == item.toLowerCase()) {
-        return [
-          TextSpan(
-            text: word.toUpperCase(),
-            style: sharedStyle.copyWith(
-              color: colorSettings.keywordsColor,
-            ),
-          )
-        ];
-      }
-    }
-
     for (final String item in dataTypeKeywords) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
@@ -155,21 +149,26 @@ class SQLCodePreview extends StatelessWidget {
       }
     }
 
-    final flatten = tablesColumns.entries.fold(
-      <String>[],
-      (previousValue, element) => previousValue
-        ..addAll(
-          element.value.map((e) => e).toList(),
-        ),
-    );
-
-    for (final String item in flatten) {
+    for (final String item in tableColumnsNames) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
           TextSpan(
             text: word,
             style: sharedStyle.copyWith(
               color: colorSettings.tablesColumnsColor,
+            ),
+          )
+        ];
+      }
+    }
+
+    for (final String item in keywords) {
+      if (word.toLowerCase().trim() == item.toLowerCase()) {
+        return [
+          TextSpan(
+            text: word.toUpperCase(),
+            style: sharedStyle.copyWith(
+              color: colorSettings.keywordsColor,
             ),
           )
         ];
