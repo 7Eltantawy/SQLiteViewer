@@ -103,42 +103,6 @@ class SQLCodePreview extends StatelessWidget {
     return textSpans;
   }
 
-  List<TextSpan> _buildTextSpans(String input) {
-    List<TextSpan> textSpans = [];
-    List<String> lines = input.split('\n');
-
-    /// Each Line
-    for (int lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-      String line = lines[lineIndex];
-      List<String> words = line.split(' ');
-
-      if (line.startsWith("--")) {
-        textSpans.add(
-          TextSpan(
-              text: line, style: TextStyle(color: colorSettings.commentColor)),
-        );
-      } else {
-        /// Each Word in line
-        for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
-          String word = words[wordIndex];
-
-          textSpans.addAll(processWord(word));
-
-          // Add a space after each word, except the last word in the line
-          if (wordIndex < words.length - 1) {
-            textSpans.add(const TextSpan(text: ' '));
-          }
-        }
-      }
-      // Add a newline after each line, except the last line
-      if (lineIndex < lines.length - 1) {
-        textSpans.add(const TextSpan(text: '\n'));
-      }
-    }
-
-    return textSpans;
-  }
-
   List<TextSpan> processWord(String word) {
     const TextStyle sharedStyle = TextStyle(
       fontWeight: FontWeight.bold,
@@ -175,20 +139,14 @@ class SQLCodePreview extends StatelessWidget {
       <String>[],
       (previousValue, element) => previousValue
         ..addAll(
-          element.value.map((e) => "${element.key}.$e").toList(),
+          element.value.map((e) => e).toList(),
         ),
     );
     for (final String item in flatten) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
           TextSpan(
-            text: word.split('.')[0].toUpperCase(),
-            style: sharedStyle.copyWith(
-              color: colorSettings.tablesColor,
-            ),
-          ),
-          TextSpan(
-            text: ".${word.split('.')[1]}",
+            text: word,
             style: sharedStyle.copyWith(
               color: colorSettings.tablesColumnsColor,
             ),
