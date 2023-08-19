@@ -12,7 +12,7 @@ class SQLCodePreview extends StatelessWidget {
     required this.keywords,
     required this.text,
     required this.tablesColumns,
-    this.colorSettings = SQLCodePreviewColorSettings.customTheme,
+    this.colorSettings = SQLCodePreviewColorSettings.highContrast4,
   });
 
   @override
@@ -57,7 +57,7 @@ class SQLCodePreview extends StatelessWidget {
           textSpans.add(
             TextSpan(
               text: char,
-              style: const TextStyle(color: Colors.blue),
+              style: TextStyle(color: colorSettings.specialCharsColor),
             ),
           );
           continue;
@@ -70,7 +70,12 @@ class SQLCodePreview extends StatelessWidget {
         if (isWord) {
           textSpans.addAll(processWord(buffer));
           buffer = "";
-          textSpans.addAll(processWord(char));
+          textSpans.add(
+            TextSpan(
+              text: char,
+              style: TextStyle(color: colorSettings.specialCharsColor),
+            ),
+          );
           isWord = false;
         } else if (isComment) {
           buffer += char;
@@ -78,7 +83,7 @@ class SQLCodePreview extends StatelessWidget {
             textSpans.add(
               TextSpan(
                 text: buffer,
-                style: const TextStyle(color: Colors.brown),
+                style: TextStyle(color: colorSettings.commentColor),
               ),
             );
 
@@ -91,7 +96,7 @@ class SQLCodePreview extends StatelessWidget {
             textSpans.add(
               TextSpan(
                 text: buffer,
-                style: const TextStyle(color: Colors.amber),
+                style: TextStyle(color: colorSettings.quotedColor),
               ),
             );
             buffer = "";
@@ -169,52 +174,65 @@ class SQLCodePreviewColorSettings {
   final Color tablesColor;
   final Color tablesColumnsColor;
   final Color commentColor;
+  final Color quotedColor;
+  final Color specialCharsColor;
 
   const SQLCodePreviewColorSettings({
     required this.keywordsColor,
     required this.tablesColor,
     required this.tablesColumnsColor,
     required this.commentColor,
+    required this.quotedColor,
+    required this.specialCharsColor,
   });
 
-  // Static fields for common color presets
-  static const SQLCodePreviewColorSettings darkTheme =
-      SQLCodePreviewColorSettings(
-    keywordsColor: Colors.blue,
-    tablesColor: Colors.purple,
-    tablesColumnsColor: Colors.teal,
-    commentColor: Colors.grey,
-  );
-
-  static const SQLCodePreviewColorSettings lightTheme =
-      SQLCodePreviewColorSettings(
-    keywordsColor: Colors.black,
-    tablesColor: Colors.blue,
-    tablesColumnsColor: Colors.blueAccent,
-    commentColor: Colors.green,
-  );
-
-  static const SQLCodePreviewColorSettings customTheme =
-      SQLCodePreviewColorSettings(
-    keywordsColor: Colors.orange,
-    tablesColor: Colors.pink,
-    tablesColumnsColor: Colors.red,
-    commentColor: Colors.grey,
-  );
-
-  static const SQLCodePreviewColorSettings monochromeTheme =
-      SQLCodePreviewColorSettings(
-    keywordsColor: Colors.black,
-    tablesColor: Colors.black,
-    tablesColumnsColor: Colors.black,
-    commentColor: Colors.black,
-  );
-
-  static const SQLCodePreviewColorSettings retroTheme =
-      SQLCodePreviewColorSettings(
-    keywordsColor: Colors.yellow,
-    tablesColor: Colors.brown,
+  // High Contrast Theme 1
+  static const highContrast1 = SQLCodePreviewColorSettings(
+    keywordsColor: Colors.white,
+    tablesColor: Colors.yellow,
     tablesColumnsColor: Colors.orange,
     commentColor: Colors.green,
+    quotedColor: Colors.blue,
+    specialCharsColor: Colors.red,
+  );
+
+  // High Contrast Theme 2
+  static const highContrast2 = SQLCodePreviewColorSettings(
+    keywordsColor: Colors.cyan,
+    tablesColor: Colors.purple,
+    tablesColumnsColor: Colors.blue,
+    commentColor: Colors.amber,
+    quotedColor: Colors.teal,
+    specialCharsColor: Colors.pink,
+  );
+
+  // High Contrast Theme 3
+  static const highContrast3 = SQLCodePreviewColorSettings(
+    keywordsColor: Colors.green,
+    tablesColor: Colors.red,
+    tablesColumnsColor: Colors.yellow,
+    commentColor: Colors.blue,
+    quotedColor: Colors.purple,
+    specialCharsColor: Colors.orange,
+  );
+
+  // High Contrast Theme 4
+  static const highContrast4 = SQLCodePreviewColorSettings(
+    keywordsColor: Colors.orange,
+    tablesColor: Colors.blue,
+    tablesColumnsColor: Colors.pink,
+    commentColor: Colors.teal,
+    quotedColor: Colors.yellow,
+    specialCharsColor: Colors.green,
+  );
+
+  // High Contrast Theme 5
+  static const highContrast5 = SQLCodePreviewColorSettings(
+    keywordsColor: Colors.pink,
+    tablesColor: Colors.green,
+    tablesColumnsColor: Colors.amber,
+    commentColor: Colors.cyan,
+    quotedColor: Colors.red,
+    specialCharsColor: Colors.blue,
   );
 }
