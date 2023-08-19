@@ -23,3 +23,15 @@
 - Select columns from tables to view
 - Execute SQL quires on database
 - Basic Syntax highlighting for (SQL keywords, data types and existing tables and columns)
+
+ 
+# App Screenshots
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/01.jpg" height="400" >
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/02.jpg" height="400" >
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/03.jpg" height="400" >
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/04.jpg" height="400" >
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/05.jpg" height="400" >
+  <img src="https://raw.githubusercontent.com/HasanEltantawy/SQLiteViewer/main/screenshots/06.jpg" height="400" >
+</p>
