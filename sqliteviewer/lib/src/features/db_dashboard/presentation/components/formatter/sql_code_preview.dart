@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class SQLCodePreview extends StatelessWidget {
   final String text;
   final List<String> keywords;
+  final List<String> dataTypeKeywords;
   final Map<String, List<String>> tablesColumns;
   final SQLCodePreviewColorSettings colorSettings;
 
   const SQLCodePreview({
     super.key,
     required this.keywords,
+    required this.dataTypeKeywords,
     required this.text,
     required this.tablesColumns,
     this.colorSettings = SQLCodePreviewColorSettings.highContrast4,
@@ -127,6 +129,19 @@ class SQLCodePreview extends StatelessWidget {
       }
     }
 
+    for (final String item in dataTypeKeywords) {
+      if (word.toLowerCase().trim() == item.toLowerCase()) {
+        return [
+          TextSpan(
+            text: word.toUpperCase(),
+            style: sharedStyle.copyWith(
+              color: Colors.black,
+            ),
+          )
+        ];
+      }
+    }
+
     for (final String item in tablesColumns.keys) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
@@ -147,6 +162,7 @@ class SQLCodePreview extends StatelessWidget {
           element.value.map((e) => e).toList(),
         ),
     );
+
     for (final String item in flatten) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
