@@ -304,7 +304,7 @@ class SQLCodePreviewColorSettings {
   );
 
   // Color Scheme 10
-  static const colorScheme10 = SQLCodePreviewColorSettings(
+  static const colorScheme5 = SQLCodePreviewColorSettings(
     keywordsColor: Color(0xFFE57373),
     dataTypeKeywords: Color(0xFF81C784),
     tablesColor: Color(0xFF64B5F6),
