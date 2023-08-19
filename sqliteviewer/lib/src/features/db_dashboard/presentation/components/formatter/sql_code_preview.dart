@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:sqliteviewer/src/core/utils/print.dart';
 
 class SQLCodePreview extends StatelessWidget {
   final String text;
@@ -22,10 +23,79 @@ class SQLCodePreview extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           style: const TextStyle(fontSize: 18),
-          children: _buildTextSpans(text),
+          children: tokenize(text),
         ),
       ),
     );
+  }
+
+  List<TextSpan> tokenize(String text) {
+    List<TextSpan> textSpans = [];
+
+    final englishText = RegExp(r'\w');
+
+    // comment start with --
+    bool isComment = false;
+    // quoted text inside "" or ''
+    bool isQuotedText = false;
+
+    // other
+    bool isWord = false;
+
+    String buffer = "";
+
+    for (var i = 0; i < text.length; i++) {
+      final char = text[i];
+
+      if (buffer == "") {
+        if (char == "'" || char == '"') {
+          isQuotedText = true;
+        } else if (char == "-") {
+          isComment = true;
+        } else if (englishText.hasMatch(char)) {
+          isWord = true;
+        } else {
+          textSpans.add(
+            TextSpan(
+              text: char,
+              style: const TextStyle(color: Colors.blue),
+            ),
+          );
+
+          continue;
+        }
+      }
+
+      buffer += char;
+
+      if (isWord && buffer.isNotEmpty) {
+        if (!englishText.hasMatch(char)) {
+          appPrint(buffer);
+          textSpans.addAll(processWord(buffer));
+          buffer = "";
+        }
+      } else if (char == "\n") {
+        if (isComment) {
+          textSpans.add(
+            TextSpan(
+              text: buffer,
+              style: const TextStyle(color: Colors.brown),
+            ),
+          );
+        }
+        buffer = "";
+      } else if (isQuotedText && buffer.length > 1 && buffer[0] == char) {
+        textSpans.add(
+          TextSpan(
+            text: buffer,
+            style: const TextStyle(color: Colors.amber),
+          ),
+        );
+        buffer = "";
+      }
+    }
+
+    return textSpans;
   }
 
   List<TextSpan> _buildTextSpans(String input) {
@@ -47,7 +117,7 @@ class SQLCodePreview extends StatelessWidget {
         for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
           String word = words[wordIndex];
 
-          textSpans.addAll(buildTextSpan(word));
+          textSpans.addAll(processWord(word));
 
           // Add a space after each word, except the last word in the line
           if (wordIndex < words.length - 1) {
@@ -64,14 +134,14 @@ class SQLCodePreview extends StatelessWidget {
     return textSpans;
   }
 
-  List<TextSpan> buildTextSpan(String word) {
+  List<TextSpan> processWord(String word) {
     const TextStyle sharedStyle = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
     );
 
     for (final String item in keywords) {
-      if (word.toLowerCase() == item.toLowerCase()) {
+      if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
           TextSpan(
             text: word.toUpperCase(),
@@ -84,7 +154,7 @@ class SQLCodePreview extends StatelessWidget {
     }
 
     for (final String item in tablesColumns.keys) {
-      if (word.toLowerCase() == item.toLowerCase()) {
+      if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
           TextSpan(
             text: word.toUpperCase(),
@@ -104,7 +174,7 @@ class SQLCodePreview extends StatelessWidget {
         ),
     );
     for (final String item in flatten) {
-      if (word.toLowerCase() == item.toLowerCase()) {
+      if (word.toLowerCase().trim() == item.toLowerCase()) {
         return [
           TextSpan(
             text: word.split('.')[0].toUpperCase(),
