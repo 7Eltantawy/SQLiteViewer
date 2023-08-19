@@ -41,27 +41,25 @@ class SQLCodePreview extends StatelessWidget {
 
   List<TextSpan> tokenize(String text) {
     List<TextSpan> textSpans = [];
-
-    // comment start with --
+    StringBuffer buffer = StringBuffer();
     bool isComment = false;
-    // quoted text inside "" or ''
     bool isQuotedText = false;
-
-    // other
     bool isWord = false;
-
-    String buffer = "";
 
     for (var i = 0; i < text.length; i++) {
       final char = text[i];
 
-      if (buffer == "") {
-        if (char == "-") {
+      if (buffer.isEmpty) {
+        if (char == "-" && i + 1 < text.length && text[i + 1] == '-') {
           isComment = true;
+          buffer.write('--');
+          i++; // Skip the second '-' character
         } else if (char == "'" || char == '"') {
           isQuotedText = true;
+          buffer.write(char);
         } else if (englishText.hasMatch(char)) {
           isWord = true;
+          buffer.write(char);
         } else {
           textSpans.add(
             TextSpan(
@@ -69,48 +67,63 @@ class SQLCodePreview extends StatelessWidget {
               style: TextStyle(color: colorSettings.specialCharsColor),
             ),
           );
-          continue;
         }
-      }
-
-      if (englishText.hasMatch(char)) {
-        buffer += char;
-      } else {
-        if (isWord) {
-          textSpans.addAll(processWord(buffer));
-          buffer = "";
+      } else if (isWord && englishText.hasMatch(char)) {
+        buffer.write(char);
+      } else if (isWord) {
+        textSpans.addAll(processWord(buffer.toString()));
+        buffer.clear();
+        textSpans.add(
+          TextSpan(
+            text: char,
+            style: TextStyle(color: colorSettings.specialCharsColor),
+          ),
+        );
+        isWord = false;
+      } else if (isComment) {
+        buffer.write(char);
+        if (char == "\n") {
           textSpans.add(
             TextSpan(
-              text: char,
-              style: TextStyle(color: colorSettings.specialCharsColor),
+              text: buffer.toString(),
+              style: TextStyle(color: colorSettings.commentColor),
             ),
           );
-          isWord = false;
-        } else if (isComment) {
-          buffer += char;
-          if (char == "\n") {
-            textSpans.add(
-              TextSpan(
-                text: buffer,
-                style: TextStyle(color: colorSettings.commentColor),
-              ),
-            );
-
-            buffer = "";
-            isComment = false;
-          }
-        } else if (isQuotedText) {
-          buffer += char;
-          if (buffer.length > 1 && buffer.trim()[0] == char) {
-            textSpans.add(
-              TextSpan(
-                text: buffer,
-                style: TextStyle(color: colorSettings.quotedColor),
-              ),
-            );
-            buffer = "";
-          }
+          buffer.clear();
+          isComment = false;
         }
+      } else if (isQuotedText) {
+        buffer.write(char);
+        if (buffer.length > 1 && buffer.toString().trim()[0] == char) {
+          textSpans.add(
+            TextSpan(
+              text: buffer.toString(),
+              style: TextStyle(color: colorSettings.quotedColor),
+            ),
+          );
+          buffer.clear();
+          isQuotedText = false;
+        }
+      }
+    }
+
+    if (buffer.isNotEmpty) {
+      if (isWord) {
+        textSpans.addAll(processWord(buffer.toString()));
+      } else if (isComment) {
+        textSpans.add(
+          TextSpan(
+            text: buffer.toString(),
+            style: TextStyle(color: colorSettings.commentColor),
+          ),
+        );
+      } else if (isQuotedText) {
+        textSpans.add(
+          TextSpan(
+            text: buffer.toString(),
+            style: TextStyle(color: colorSettings.quotedColor),
+          ),
+        );
       }
     }
 
