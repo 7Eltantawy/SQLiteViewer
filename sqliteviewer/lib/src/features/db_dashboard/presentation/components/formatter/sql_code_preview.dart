@@ -71,7 +71,7 @@ class SQLCodePreview extends StatelessWidget {
       } else if (isWord && englishText.hasMatch(char)) {
         buffer.write(char);
       } else if (isWord) {
-        textSpans.addAll(processWord(buffer.toString()));
+        textSpans.add(processWord(buffer.toString()));
         buffer.clear();
         textSpans.add(
           TextSpan(
@@ -109,7 +109,7 @@ class SQLCodePreview extends StatelessWidget {
 
     if (buffer.isNotEmpty) {
       if (isWord) {
-        textSpans.addAll(processWord(buffer.toString()));
+        textSpans.add(processWord(buffer.toString()));
       } else if (isComment) {
         textSpans.add(
           TextSpan(
@@ -130,70 +130,60 @@ class SQLCodePreview extends StatelessWidget {
     return textSpans;
   }
 
-  List<TextSpan> processWord(String word) {
+  TextSpan processWord(String word) {
     const TextStyle sharedStyle = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
     );
 
     for (final String item in dataTypeKeywords) {
-      if (word.toLowerCase().trim() == item.toLowerCase()) {
-        return [
-          TextSpan(
-            text: word.toUpperCase(),
-            style: sharedStyle.copyWith(
-              color: colorSettings.dataTypeKeywords,
-            ),
-          )
-        ];
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return TextSpan(
+          text: word.toUpperCase(),
+          style: sharedStyle.copyWith(
+            color: colorSettings.dataTypeKeywords,
+          ),
+        );
       }
     }
 
     for (final String item in tablesColumns.keys) {
-      if (word.toLowerCase().trim() == item.toLowerCase()) {
-        return [
-          TextSpan(
-            text: word.toUpperCase(),
-            style: sharedStyle.copyWith(
-              color: colorSettings.tablesColor,
-            ),
-          )
-        ];
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return TextSpan(
+          text: word,
+          style: sharedStyle.copyWith(
+            color: colorSettings.tablesColor,
+          ),
+        );
       }
     }
 
     for (final String item in tableColumnsNames) {
-      if (word.toLowerCase().trim() == item.toLowerCase()) {
-        return [
-          TextSpan(
-            text: word,
-            style: sharedStyle.copyWith(
-              color: colorSettings.tablesColumnsColor,
-            ),
-          )
-        ];
+      if (word.toLowerCase() == item.toLowerCase()) {
+        return TextSpan(
+          text: word,
+          style: sharedStyle.copyWith(
+            color: colorSettings.tablesColumnsColor,
+          ),
+        );
       }
     }
 
     for (final String item in keywords) {
       if (word.toLowerCase().trim() == item.toLowerCase()) {
-        return [
-          TextSpan(
-            text: word.toUpperCase(),
-            style: sharedStyle.copyWith(
-              color: colorSettings.keywordsColor,
-            ),
-          )
-        ];
+        return TextSpan(
+          text: word.toUpperCase(),
+          style: sharedStyle.copyWith(
+            color: colorSettings.keywordsColor,
+          ),
+        );
       }
     }
 
-    return [
-      TextSpan(
-        text: word,
-        style: sharedStyle,
-      )
-    ];
+    return TextSpan(
+      text: word,
+      style: sharedStyle,
+    );
   }
 }
 
