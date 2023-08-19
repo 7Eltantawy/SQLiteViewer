@@ -70,5 +70,10 @@ final List<String> sqliteReservedKeywords = [
   'VACUUM', 'VALUES', 'VIEW', 'VIRTUAL',
 
   // W
-  'WHEN', 'WHERE', 'WITH', 'WITHOUT'
+  'WHEN', 'WHERE', 'WITH', 'WITHOUT',
+];
+
+final List<String> sqliteDataTypeKeywords = [
+  // SQLite Data Types
+  'NULL', 'INTEGER', 'REAL', 'TEXT', 'BLOB'
 ];

@@ -86,6 +86,7 @@ class DBQueryPage extends StatelessWidget {
                                 .text,
                             tablesColumns: state.tablesColumns,
                             keywords: sqliteReservedKeywords,
+                            dataTypeKeywords: sqliteDataTypeKeywords,
                           ),
                         ],
                       ),
