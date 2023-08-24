@@ -19,7 +19,12 @@ class DashboardScreen extends StatelessWidget {
             ),
             title: const Text("SQLite Viewer"),
             centerTitle: true,
-            actions: [Text(appVersion)],
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(appVersion),
+              )
+            ],
           ),
           body: ListView.builder(
             itemCount: state.openedPaths.length,
