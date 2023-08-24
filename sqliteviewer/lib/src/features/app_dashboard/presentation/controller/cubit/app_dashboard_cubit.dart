@@ -24,7 +24,7 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
         type: FileType.any,
       );
     } catch (e) {
-      showToast(e.toString());
+      showToast(e.toString(), appToastStyle: AppToastStyle.error);
       appPrint(e);
     }
 
@@ -32,7 +32,7 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
     String filePath = result.files.single.path!;
 
     if (!filePath.endsWith('.db')) {
-      showToast("Please select .db file");
+      showToast("Please select .db file", appToastStyle: AppToastStyle.error);
 
       return;
     }

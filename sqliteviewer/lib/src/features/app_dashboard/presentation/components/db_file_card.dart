@@ -36,7 +36,10 @@ class DBFileCard extends StatelessWidget {
         final bool isExist = File(dbPath).existsSync();
 
         if (!isExist) {
-          showToast("Database Not Exist");
+          showToast(
+            "Database Not Exist",
+            appToastStyle: AppToastStyle.error,
+          );
           return;
         }
 
