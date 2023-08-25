@@ -13,8 +13,15 @@ part 'app_dashboard_state.dart';
 class AppDashboardCubit extends Cubit<AppDashboardState> {
   AppDashboardCubit()
       : super(
-          AppDashboardState(openedPaths: LocalStorageRepo.lastOpenedFiles()),
+          AppDashboardState(
+            openedPaths: LocalStorageRepo.lastOpenedFiles(),
+            isDragging: false,
+          ),
         );
+
+  void toggleDraggingState(bool isDragging) {
+    emit(state.copyWith(isDragging: isDragging));
+  }
 
   Future<void> pickDatabaseFromFiles() async {
     FilePickerResult? result;
@@ -31,6 +38,10 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
     if (result == null) return;
     String filePath = result.files.single.path!;
 
+    handleOpenedFile(filePath);
+  }
+
+  void handleOpenedFile(String filePath) async {
     if (!filePath.endsWith('.db')) {
       showToast("Please select .db file", appToastStyle: AppToastStyle.error);
 

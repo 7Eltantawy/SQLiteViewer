@@ -24,6 +24,7 @@ dependencies:
   equatable: ^2.0.5
   sqflite_common_ffi: ^2.3.0+2
   overlay_support: ^2.1.0
+  desktop_drop: ^0.4.2
 
 dev_dependencies:
   flutter_test:
