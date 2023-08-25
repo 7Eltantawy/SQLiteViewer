@@ -51,6 +51,8 @@ class DBQueryPage extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(10),
                 child: Scrollbar(
+                  controller:
+                      context.read<DbDashboardCubit>().scrollController1,
                   child: TextField(
                     scrollController:
                         context.read<DbDashboardCubit>().scrollController1,
@@ -94,12 +96,13 @@ class DBQueryPage extends StatelessWidget {
                   }),
               const Divider(),
               Expanded(
-                  flex: 2,
-                  child: Card(
-                    child: state.isQuerying
-                        ? const Loading()
-                        : TableContentDataGrid(data: state.result),
-                  )),
+                flex: 2,
+                child: Card(
+                  child: state.isQuerying
+                      ? const Loading()
+                      : TableContentDataGrid(data: state.result),
+                ),
+              ),
             ],
           ),
         );
