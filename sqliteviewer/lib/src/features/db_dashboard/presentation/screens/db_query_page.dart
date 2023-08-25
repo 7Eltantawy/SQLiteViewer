@@ -24,11 +24,14 @@ class DBQueryPage extends StatelessWidget {
               queryCodePreview(context, state),
             ] else
               Expanded(
-                child: Row(
-                  children: [
-                    Expanded(child: queryCodeInput(context)),
-                    Expanded(child: queryCodePreview(context, state)),
-                  ],
+                child: Card(
+                  child: Row(
+                    children: [
+                      Expanded(child: queryCodeInput(context)),
+                      const VerticalDivider(),
+                      Expanded(child: queryCodePreview(context, state)),
+                    ],
+                  ),
                 ),
               ),
             const Divider(),
@@ -57,7 +60,6 @@ class DBQueryPage extends StatelessWidget {
           constraints: const BoxConstraints(
             maxHeight: 200,
           ),
-          padding: const EdgeInsets.all(10),
           child: ListView(
             controller: context.read<DbDashboardCubit>().scrollController2,
             children: [
@@ -79,7 +81,6 @@ class DBQueryPage extends StatelessWidget {
       constraints: const BoxConstraints(
         maxHeight: 200,
       ),
-      padding: const EdgeInsets.all(10),
       child: Scrollbar(
         controller: context.read<DbDashboardCubit>().scrollController1,
         child: TextField(
@@ -88,6 +89,10 @@ class DBQueryPage extends StatelessWidget {
           maxLines: null,
           keyboardType: TextInputType.multiline,
           expands: true,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(10),
+            hintText: "Write Code Here".toUpperCase(),
+          ),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
