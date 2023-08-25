@@ -11,102 +11,122 @@ class DBQueryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return BlocBuilder<DbDashboardCubit, DbDashboardState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Card(
+        builder: (context, state) {
+      return Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            queryToolBar(context),
+            if (width < 600) ...[
+              queryCodeInput(context),
+              queryCodePreview(context, state),
+            ] else
+              Expanded(
                 child: Row(
                   children: [
-                    Tooltip(
-                      message: "Execute SQL",
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.play_circle_outline,
-                        ),
-                        onPressed: () async {
-                          context.read<DbDashboardCubit>().query();
-                        },
-                      ),
-                    ),
-                    Tooltip(
-                      message: "Clear SQL Text",
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                        ),
-                        onPressed: () async {
-                          context.read<DbDashboardCubit>().clearQuery();
-                        },
-                      ),
-                    ),
+                    Expanded(child: queryCodeInput(context)),
+                    Expanded(child: queryCodePreview(context, state)),
                   ],
                 ),
               ),
-              Container(
-                constraints: const BoxConstraints(
-                  maxHeight: 200,
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Scrollbar(
-                  controller:
-                      context.read<DbDashboardCubit>().scrollController1,
-                  child: TextField(
-                    scrollController:
-                        context.read<DbDashboardCubit>().scrollController1,
-                    controller:
-                        context.read<DbDashboardCubit>().sqlCodeController,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    expands: true,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    // inputFormatters: [
-                    //   ColoredTextFormatter(sqliteReservedKeywords),
-                    // ],
-                  ),
-                ),
+            const Divider(),
+            Expanded(
+              flex: 2,
+              child: Card(
+                child: state.isQuerying
+                    ? const Loading()
+                    : TableContentDataGrid(data: state.result),
               ),
-              ListenableBuilder(
-                  listenable:
-                      context.read<DbDashboardCubit>().sqlCodeController,
-                  builder: (_, __) {
-                    return Container(
-                      constraints: const BoxConstraints(maxHeight: 200),
-                      padding: const EdgeInsets.all(10),
-                      child: ListView(
-                        controller:
-                            context.read<DbDashboardCubit>().scrollController2,
-                        children: [
-                          SQLCodePreview(
-                            text: context
-                                .read<DbDashboardCubit>()
-                                .sqlCodeController
-                                .text,
-                            tablesColumns: state.tablesColumns,
-                            keywords: sqliteReservedKeywords,
-                            dataTypeKeywords: sqliteDataTypeKeywords,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-              const Divider(),
-              Expanded(
-                flex: 2,
-                child: Card(
-                  child: state.isQuerying
-                      ? const Loading()
-                      : TableContentDataGrid(data: state.result),
-                ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  ListenableBuilder queryCodePreview(
+    BuildContext context,
+    DbDashboardState state,
+  ) {
+    return ListenableBuilder(
+      listenable: context.read<DbDashboardCubit>().sqlCodeController,
+      builder: (_, __) {
+        return Container(
+          constraints: const BoxConstraints(
+            maxHeight: 200,
+          ),
+          padding: const EdgeInsets.all(10),
+          child: ListView(
+            controller: context.read<DbDashboardCubit>().scrollController2,
+            children: [
+              SQLCodePreview(
+                text: context.read<DbDashboardCubit>().sqlCodeController.text,
+                tablesColumns: state.tablesColumns,
+                keywords: sqliteReservedKeywords,
+                dataTypeKeywords: sqliteDataTypeKeywords,
               ),
             ],
           ),
         );
       },
+    );
+  }
+
+  Container queryCodeInput(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(
+        maxHeight: 200,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Scrollbar(
+        controller: context.read<DbDashboardCubit>().scrollController1,
+        child: TextField(
+          scrollController: context.read<DbDashboardCubit>().scrollController1,
+          controller: context.read<DbDashboardCubit>().sqlCodeController,
+          maxLines: null,
+          keyboardType: TextInputType.multiline,
+          expands: true,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+          // inputFormatters: [
+          //   ColoredTextFormatter(sqliteReservedKeywords),
+          // ],
+        ),
+      ),
+    );
+  }
+
+  Card queryToolBar(BuildContext context) {
+    return Card(
+      child: Row(
+        children: [
+          Tooltip(
+            message: "Execute SQL",
+            child: IconButton(
+              icon: const Icon(
+                Icons.play_circle_outline,
+              ),
+              onPressed: () async {
+                context.read<DbDashboardCubit>().query();
+              },
+            ),
+          ),
+          Tooltip(
+            message: "Clear SQL Text",
+            child: IconButton(
+              icon: const Icon(
+                Icons.close,
+              ),
+              onPressed: () async {
+                context.read<DbDashboardCubit>().clearQuery();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
