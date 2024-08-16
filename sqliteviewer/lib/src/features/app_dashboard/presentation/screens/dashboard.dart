@@ -11,7 +11,7 @@ class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return BlocBuilder<AppDashboardCubit, AppDashboardState>(
       builder: (context, state) {
         return DropTarget(
@@ -28,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
             context.read<AppDashboardCubit>().toggleDraggingState(false);
           },
           child: Scaffold(
-            key: _scaffoldKey,
+            key: scaffoldKey,
             appBar: AppBar(
               leading: Padding(
                 padding: const EdgeInsets.all(10),
@@ -60,7 +60,7 @@ class DashboardScreen extends StatelessWidget {
               onPressed: () {
                 context
                     .read<AppDashboardCubit>()
-                    .pickDatabaseFromFiles(_scaffoldKey);
+                    .pickDatabaseFromFiles(scaffoldKey);
               },
             ),
           ),
