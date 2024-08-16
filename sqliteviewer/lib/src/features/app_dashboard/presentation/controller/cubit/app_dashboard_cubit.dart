@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 import 'package:sqliteviewer/src/core/utils/show_toast.dart';
 import 'package:sqliteviewer/src/features/app_dashboard/data/data_source/local_storage.dart';
@@ -80,7 +81,8 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
 
   Future<bool> handleOpenedFile(String filePath) async {
     if (!await isValidDatabaseFile(filePath)) {
-      showToast("Not supported file.", appToastStyle: AppToastStyle.error);
+      showToast("Not supported file.\n${filePath.getFileName()}",
+          appToastStyle: AppToastStyle.error);
       return false;
     }
 
