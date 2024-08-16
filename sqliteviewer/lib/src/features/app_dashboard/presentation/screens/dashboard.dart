@@ -9,9 +9,9 @@ import '../components/drag_file_card.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return BlocBuilder<AppDashboardCubit, AppDashboardState>(
       builder: (context, state) {
         return DropTarget(
@@ -28,6 +28,7 @@ class DashboardScreen extends StatelessWidget {
             context.read<AppDashboardCubit>().toggleDraggingState(false);
           },
           child: Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
               leading: Padding(
                 padding: const EdgeInsets.all(10),
@@ -57,7 +58,9 @@ class DashboardScreen extends StatelessWidget {
               tooltip: "Open Database",
               child: const Icon(Icons.file_open_outlined),
               onPressed: () {
-                context.read<AppDashboardCubit>().pickDatabaseFromFiles();
+                context
+                    .read<AppDashboardCubit>()
+                    .pickDatabaseFromFiles(_scaffoldKey);
               },
             ),
           ),
