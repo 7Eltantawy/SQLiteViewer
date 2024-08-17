@@ -63,10 +63,20 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
       patternMap[pattern] = const TextStyle(color: Colors.green);
     });
 
-    codeController =
-        CodeController(text: "", language: sql, patternMap: patternMap);
-
-    appPrint(patternMap);
+    String sqlCodeSample = "";
+    if (tablesColumns.isNotEmpty) {
+      String tableNameSample = tablesColumns.keys.first;
+      if (tablesColumns.keys.length > 1 &&
+          tableNameSample == "android_metadata") {
+        tableNameSample = tablesColumns.keys.elementAt(1);
+      }
+      sqlCodeSample = "Select * from $tableNameSample limit 10;";
+    }
+    codeController = CodeController(
+      text: sqlCodeSample,
+      language: sql,
+      patternMap: patternMap,
+    );
 
     emit(state.copyWith(
       tables: tables,
