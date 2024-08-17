@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:code_text_field/code_text_field.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:highlight/languages/sql.dart';
 import 'package:sqliteviewer/src/core/helpers/db_helper.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
 
@@ -10,6 +12,7 @@ part 'db_dashboard_state.dart';
 class DbDashboardCubit extends Cubit<DbDashboardState> {
   final String dbPath;
   final TextEditingController sqlCodeController = TextEditingController();
+  late CodeController codeController;
   final ScrollController scrollController1 = ScrollController();
   final ScrollController scrollController2 = ScrollController();
 
@@ -22,6 +25,7 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
           tablesColumns: {},
         )) {
     DatabaseHelper.path = dbPath;
+    codeController = CodeController(text: "", language: sql, stringMap: {});
     loadTables();
     scrollController1.addListener(_scrollListener);
     scrollController2.addListener(_scrollListener);
@@ -49,6 +53,21 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
       tablesColumns[table] = columns;
     }
 
+    Map<String, TextStyle> patternMap = {};
+    tablesColumns.forEach((table, columns) {
+      for (String column in columns) {
+        String pattern = r'\b' + table + r'\.' + column + r'\b';
+        patternMap[pattern] = const TextStyle(color: Colors.yellow);
+      }
+      String pattern = r'\b' + table + r'\b';
+      patternMap[pattern] = const TextStyle(color: Colors.green);
+    });
+
+    codeController =
+        CodeController(text: "", language: sql, patternMap: patternMap);
+
+    appPrint(patternMap);
+
     emit(state.copyWith(
       tables: tables,
       isLoading: false,
@@ -61,8 +80,7 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
 
     late final List<Map<String, dynamic>> result;
     try {
-      result =
-          await DatabaseHelper.instance.query(sqlCodeController.text.trim());
+      result = await DatabaseHelper.instance.query(codeController.text.trim());
     } catch (e) {
       result = [
         {"SQLite Viewer Error": e.toString()}
@@ -78,7 +96,7 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
   }
 
   void clearQuery() {
-    sqlCodeController.clear();
+    codeController.clear();
   }
 
   @override
@@ -86,6 +104,8 @@ class DbDashboardCubit extends Cubit<DbDashboardState> {
     sqlCodeController.dispose();
     scrollController1.dispose();
     scrollController2.dispose();
+    codeController.dispose();
+
     try {
       DatabaseHelper.instance.close();
     } catch (e) {
