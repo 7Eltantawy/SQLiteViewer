@@ -48,18 +48,20 @@ class _TableContentDataGridState extends State<TableContentDataGrid> {
           child: Container(
             // constraints: const BoxConstraints(minHeight: 100, maxHeight: 350),
             padding: const EdgeInsets.all(10.0),
-            child: Center(
-              child: Scrollbar(
-                child: ListView(
-                  padding: const EdgeInsets.all(10.0),
-                  shrinkWrap: true,
-                  children: [
-                    SelectableText(
-                      value.toString(),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+            child: Scrollbar(
+              child: ListView(
+                padding: const EdgeInsets.all(10.0),
+                shrinkWrap: true,
+                children: [
+                  Column(
+                    children: [
+                      SelectableText(
+                        value.toString(),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
