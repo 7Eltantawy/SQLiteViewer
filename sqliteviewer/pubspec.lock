@@ -77,10 +77,10 @@ packages:
     dependency: "direct main"
     description:
       name: desktop_drop
-      sha256: "222176827aa4799266800be4ef4e59a607b0fdb1f3a1b0cc6d1fa0a14469f9e3"
+      sha256: d55a010fe46c8e8fcff4ea4b451a9ff84a162217bdb3b2a0aa1479776205e15d
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.2"
+    version: "0.4.4"
   equatable:
     dependency: "direct main"
     description:

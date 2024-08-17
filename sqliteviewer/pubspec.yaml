@@ -24,7 +24,7 @@ dependencies:
   equatable: ^2.0.5
   sqflite_common_ffi: ^2.3.3
   overlay_support: ^2.1.0
-  desktop_drop: ^0.4.2
+  desktop_drop: ^0.4.4
   code_text_field: ^1.1.0
   permission_handler: ^11.3.1
 

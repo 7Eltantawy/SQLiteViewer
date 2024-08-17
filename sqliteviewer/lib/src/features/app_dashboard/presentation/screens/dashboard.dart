@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqliteviewer/src/core/values/constants.dart';
 import 'package:sqliteviewer/src/features/app_dashboard/presentation/components/db_file_card.dart';
 import 'package:sqliteviewer/src/features/app_dashboard/presentation/controller/cubit/app_dashboard_cubit.dart';
+import 'package:sqliteviewer/src/features/db_dashboard/presentation/screens/db_dashboard.dart';
 
 import '../components/drag_file_card.dart';
 
@@ -15,11 +16,20 @@ class DashboardScreen extends StatelessWidget {
     return BlocBuilder<AppDashboardCubit, AppDashboardState>(
       builder: (context, state) {
         return DropTarget(
-          onDragDone: (details) {
+          onDragDone: (details) async {
             context.read<AppDashboardCubit>().toggleDraggingState(false);
-            context
+            final result = await context
                 .read<AppDashboardCubit>()
                 .handleOpenedFile(details.files.first.path);
+
+            if (result) {
+              // Safely access the context after checking if mounted
+              final scaffoldContext = scaffoldKey.currentState?.context;
+              if (scaffoldContext != null && scaffoldContext.mounted) {
+                Navigator.push(scaffoldContext,
+                    DBDashboard.route(details.files.first.path));
+              }
+            }
           },
           onDragEntered: (detail) {
             context.read<AppDashboardCubit>().toggleDraggingState(true);
