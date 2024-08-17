@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqliteviewer/src/core/extension/string.dart';
 import 'package:sqliteviewer/src/core/utils/print.dart';
@@ -54,28 +55,34 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
 
   Future<void> pickDatabaseFromFiles(
       GlobalKey<ScaffoldState> scaffoldKey) async {
-    FilePickerResult? result;
-
     try {
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-      );
-    } catch (e) {
-      showToast(e.toString(), appToastStyle: AppToastStyle.error);
-      appPrint(e);
-    }
-
-    if (result == null) return;
-    String filePath = result.files.single.path!;
-
-    if (await handleOpenedFile(filePath)) {
-      final scaffoldContext = scaffoldKey.currentState!.context;
-      if (scaffoldContext.mounted) {
-        Navigator.push(
-          scaffoldContext,
-          DBDashboard.route(filePath),
-        );
+      // Request storage permission
+      if (await Permission.storage.request().isDenied) {
+        // If storage permission is denied, request manage external storage permission
+        if (await Permission.manageExternalStorage.request().isDenied) {
+          showToast("Allow app to read and write files",
+              appToastStyle: AppToastStyle.error);
+          return;
+        }
       }
+
+      // Pick a file
+      final result = await FilePicker.platform.pickFiles(type: FileType.any);
+      if (result == null) return; // User canceled the picker
+
+      final filePath = result.files.single.path!;
+      if (await handleOpenedFile(filePath)) {
+        // Safely access the context after checking if mounted
+        final scaffoldContext = scaffoldKey.currentState?.context;
+        if (scaffoldContext != null && scaffoldContext.mounted) {
+          Navigator.push(scaffoldContext, DBDashboard.route(filePath));
+        }
+      }
+    } catch (e) {
+      // Handle errors
+      showToast("An error occurred: ${e.toString()}",
+          appToastStyle: AppToastStyle.error);
+      appPrint(e);
     }
   }
 
