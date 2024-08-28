@@ -57,13 +57,11 @@ class AppDashboardCubit extends Cubit<AppDashboardState> {
       GlobalKey<ScaffoldState> scaffoldKey) async {
     try {
       // Request storage permission
-      if (await Permission.storage.request().isDenied) {
-        // If storage permission is denied, request manage external storage permission
-        if (await Permission.manageExternalStorage.request().isDenied) {
-          showToast("Allow app to read and write files",
-              appToastStyle: AppToastStyle.error);
-          return;
-        }
+      if (!(await Permission.storage.request().isGranted ||
+          await Permission.manageExternalStorage.request().isGranted)) {
+        showToast("Allow app to read and write files",
+            appToastStyle: AppToastStyle.error);
+        return;
       }
 
       // Pick a file
